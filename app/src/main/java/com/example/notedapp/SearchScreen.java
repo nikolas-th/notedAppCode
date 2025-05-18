@@ -101,8 +101,10 @@ public class SearchScreen extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.nav_home) {
                     //Tha phgainei sthn arxikh
-                } else if (id == R.id.nav_settings) {
-                    // Τha phgainei stis rythmiseis
+                } else if (id == R.id.nav_profil) {
+                    // Τha phgainei sto profil
+                } else if (id == R.id.nav_lists) {
+                        // Τha phgainei stis listes
                 } else if (id == R.id.nav_logout) {
                     finish(); // eksodos
                 }

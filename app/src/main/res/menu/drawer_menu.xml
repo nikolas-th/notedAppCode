@@ -9,12 +9,7 @@
     <item
         android:id="@+id/nav_lists"
         android:title="Οι λίστες μου" />
-    <item
-        android:id="@+id/nav_fav"
-        android:title="Tα αγαπημένα μου" />
-    <item
-        android:id="@+id/nav_settings"
-        android:title="Ρυθμίσεις" />
+ 
     <item
         android:id="@+id/nav_logout"
         android:title="Έξοδος" />
