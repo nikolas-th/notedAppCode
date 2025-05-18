@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 // Προαιρετικά: κάνε login, ή άλλη ενέργεια
                 Toast.makeText(MainActivity.this, "Login επιτυχές!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, SearchScreen.class);
+                Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                 intent.putExtra("username", username); //Metafora tou username sthn selida SearchScreen
                 startActivity(intent);
             }

@@ -28,6 +28,7 @@ public class Release {
         this.imageId = imageId;
         this.rating = rating;
     }
+
     
 }
  

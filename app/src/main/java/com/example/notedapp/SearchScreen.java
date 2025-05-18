@@ -1,6 +1,7 @@
 package com.example.notedapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -100,7 +101,9 @@ public class SearchScreen extends AppCompatActivity {
 
                 int id = item.getItemId();
                 if (id == R.id.nav_home) {
-                    //Tha phgainei sthn arxikh
+                    Intent homeIntent = new Intent(SearchScreen.this, HomeScreen.class);
+                    homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
+                    startActivity(homeIntent);
                 } else if (id == R.id.nav_profil) {
                     // Τha phgainei sto profil
                 } else if (id == R.id.nav_lists) {
