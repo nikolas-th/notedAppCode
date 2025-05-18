@@ -140,6 +140,13 @@
                     android:layout_height="wrap_content"
                     android:text="Πληροφορίες για την κυκλοφορία" />
 
+                <Button
+                    android:id="@+id/ReviewButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Aξιολόγηση" />
+
 
             </LinearLayout>
 
