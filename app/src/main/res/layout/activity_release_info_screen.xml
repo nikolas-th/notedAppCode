@@ -56,6 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="19sp"
+                    style="@style/CardView.Dark"
                     android:text="Τίτλος" />
 
                 <TextView
@@ -92,6 +93,52 @@
                     android:layout_width="350dp"
                     android:layout_height="350dp"
                     android:layout_margin="10dp"/>
+
+                <TextView
+                    android:id="@+id/theRatigns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textSize="17sp"
+                    style="@style/CardView.Dark"
+                    android:text="Aξιολογήσεις χρηστών" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="0dp"
+                    android:layout_margin="0dp">
+
+                    <RatingBar
+                        android:id="@+id/ratingBarTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5" />
+                    <TextView
+                        android:id="@+id/ratingInd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginTop="15dp"
+                        android:text="(3/5)"
+                        android:textSize="17sp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textSize="17sp"
+                    style="@style/CardView.Dark"
+                    android:text="Πληροφορίες" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Πληροφορίες για την κυκλοφορία" />
 
 
             </LinearLayout>
