@@ -23,10 +23,11 @@ public class Release {
         this.genre = genre;
     }
 
-    public Release(String title, int imageId, String rating) {
+    public Release(String title, int imageId, String rating, String artist) {
         this.title = title;
         this.imageId = imageId;
         this.rating = rating;
+        this.artist = artist;
     }
 
     

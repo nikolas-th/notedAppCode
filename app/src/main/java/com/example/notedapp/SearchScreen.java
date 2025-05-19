@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SearchView;
@@ -34,7 +35,7 @@ public class SearchScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen);
 
-        ListView dummyList = findViewById(R.id.dummyList); //H lista me tis prosfates anazhthseis
+        ListView releaseList = findViewById(R.id.releaseList); //H lista me tis prosfates anazhthseis
         SearchView searchView = findViewById(R.id.SearchBar); //h bara anazhtishs
         TextView resSearch = findViewById(R.id.resSearch); //label "Πρόσφατες αναζητήσεις"
 
@@ -46,16 +47,16 @@ public class SearchScreen extends AppCompatActivity {
         
 
         Release[] items = new Release[] {
-            new Release("Τίτλος 1", R.drawable.smithscover, "(2.5/5)"),
-            new Release("Τίτλος 2", R.drawable.paranoid, "(2/5)"),
-            new Release("Τίτλος 3", R.drawable.smithscover2, "(3/5)"),
-            new Release("Τίτλος 4", R.drawable.swimming2, "(4.5/5)"),
-            new Release("Τίτλος 5", R.drawable.smithscover, "(5/5)"),
-            new Release("Τίτλος 6", R.drawable.paranoid, "(1.4/5)"),
-            new Release("Τίτλος 7", R.drawable.smithscover, "(2.8/5)"),
-            new Release("Τίτλος 8", R.drawable.smithscover2, "(3/7)"),
-            new Release("Τίτλος 9", R.drawable.paranoid, "(3.9/5)"),
-            new Release("Τίτλος 10", R.drawable.smithscover2, "(4/5)")
+            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.5/5)", "The Smiths"),
+            new Release("Paranoid", R.drawable.paranoid, "(2/5)", "Black Sabbath"),
+            new Release("Meat is murder", R.drawable.smithscover2, "(3/5)", "The Smiths"),
+            new Release("Swimming", R.drawable.swimming2, "(4.5/5)", "Mac Miller"),
+            new Release("Hatful of Hollow", R.drawable.smithscover, "(5/5)", "The Smiths"),
+            new Release("Paranoid", R.drawable.paranoid, "(1.4/5)", "Black Sabbath"),
+            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.8/5)", "The Smiths"),
+            new Release("Meat is murder", R.drawable.smithscover2, "(3/7)", "The Smiths"),
+            new Release("Paranoid", R.drawable.paranoid, "(3.9/5)", "Black Sabbath"),
+            new Release("Meat is murder", R.drawable.smithscover2, "(4/5)", "The Smiths")
         };
         
 
@@ -63,16 +64,18 @@ public class SearchScreen extends AppCompatActivity {
         String[] titles = new String[items.length];
         int[] imageIds = new int[items.length];
         String[] ratings = new String[items.length];
+        String[] artists = new String[items.length];
 
         // Populate them by looping through the `items` array
         for (int i = 0; i < items.length; i++) {
             titles[i] = items[i].title;
             imageIds[i] = items[i].imageId;
             ratings[i] = items[i].rating;
+            artists[i] = items[i].artist;
         }
 
-        CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, resSearch);
-        dummyList.setAdapter(adapter);
+        CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, resSearch);
+        releaseList.setAdapter(adapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -85,6 +88,26 @@ public class SearchScreen extends AppCompatActivity {
                 adapter.getFilter().filter(newText);
                 //return true;
                 return false;
+            }
+        });
+
+        //Metafora dedomenwn sthn othonh Release otan o xrhsths epilegei mia kykloforia
+        releaseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Πάρε τα δεδομένα που θες
+                String selectedTitle = titles[position];
+                int selectedImageId = imageIds[position];
+                String selectedArtist = artists[position];
+
+                // Φτιάξε το Intent
+                Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
+                intent.putExtra("title", selectedTitle);
+                intent.putExtra("imageId", selectedImageId);
+                intent.putExtra("artist", selectedArtist);
+
+                // Ξεκίνα το άλλο activity
+                startActivity(intent);
             }
         });
 

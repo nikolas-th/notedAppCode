@@ -66,7 +66,7 @@
                     android:textSize="18dp" />
 
                 <ListView
-                    android:id="@+id/dummyList"
+                    android:id="@+id/releaseList"
                     android:layout_width="match_parent"
                     android:layout_height="488dp"
                     android:layout_marginTop="30dp"

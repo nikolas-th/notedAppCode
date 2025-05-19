@@ -21,25 +21,32 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private final String[] values;
     private final int[] imageIds;
     private  final String[] ratingIds;
+    private  final String[] artists;
     private List<String> originalValues;
     private List<Integer> originalImageIds;
+
+    private List<String> originalArtists;
     private List<String> filteredValues;
     private List<Integer> filteredImageIds;
+    private List<String> filteredArtists;
     private final TextView resSearch;
 
-    public CustomListAdapter(Context context, String[] values, int[] imageIds, String[] ratingIds, TextView resSearch) {
+    public CustomListAdapter(Context context, String[] values, int[] imageIds, String[] ratingIds, String[] artists,  TextView resSearch) {
         super(context, R.layout.list_item_with_icon, values);
         this.context = context;
         this.values = values;
         this.imageIds = imageIds;
         this.ratingIds = ratingIds;
+        this.artists = artists;
         this.resSearch = resSearch;
         this.originalValues = Arrays.asList(values);
         this.originalImageIds = new ArrayList<>();
+        this.originalArtists = Arrays.asList(artists);
         for (int id : imageIds) originalImageIds.add(id);
 
         this.filteredValues = new ArrayList<>(originalValues);
         this.filteredImageIds = new ArrayList<>(originalImageIds);
+        this.filteredArtists = new ArrayList<>(originalArtists);
 
     }
 
@@ -59,19 +66,22 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowView = inflater.inflate(R.layout.list_item_with_icon, parent, false);
 
-        TextView textView = rowView.findViewById(R.id.itemTitle);
+        TextView title = rowView.findViewById(R.id.itemTitle);
         ImageView imageView = rowView.findViewById(R.id.itemIcon);
         RatingBar ratingBar = rowView.findViewById(R.id.ratingBar);
         TextView ratingText = rowView.findViewById(R.id.ratingInd);
+        TextView artist = rowView.findViewById(R.id.itemArtist);
 
 
         ratingBar.setStepSize(0.1f); // Αυτό επιτρέπει την βαθμολογία με 0.1 ακρίβεια
 
-        textView.setText(values[position]); // o titlos poy analogei se kathe kykloforia
+        title.setText(values[position]); // o titlos poy analogei se kathe kykloforia
         imageView.setImageResource(imageIds[position]); // h eikona pou analogei se kathe cover
+        artist.setText(values[position]); //o kallitexnhs poy analogei se kathe kykloforia
 
-        textView.setText(filteredValues.get(position));
+        title.setText(filteredValues.get(position));
         imageView.setImageResource(filteredImageIds.get(position));
+        artist.setText(filteredArtists.get(position));
 
         // Rating parsing
 
@@ -111,28 +121,30 @@ public class CustomListAdapter extends ArrayAdapter<String> {
             protected FilterResults performFiltering(CharSequence constraint) {
                 List<String> filteredTitles = new ArrayList<>();
                 List<Integer> filteredImages = new ArrayList<>();
+                List<String> filteredArtists = new ArrayList<>();
 
                 if (constraint == null || constraint.length() == 0) { //an den yparxei keimeno anazhthshs
                     //epistrefei tis arxikes times
 
-                    //filteredTitles.addAll(originalValues);
-                   // filteredImages.addAll(originalImageIds);
                     filteredTitles = new ArrayList<>(originalValues);
                     filteredImages = new ArrayList<>(originalImageIds);
+                    filteredArtists = new ArrayList<>(originalArtists);
                 } else {
                     String query = constraint.toString().toLowerCase().trim(); // yparxei keimeno anazhthshs
                     for (int i = 0; i < originalValues.size(); i++) {
                         String title = originalValues.get(i);
+                        String artist = originalArtists.get(i);
                         if (title.toLowerCase().contains(query)) { // elegxei an to keimeno anazhthshs tairiazei me kapoio stoixeio apo thn lista
                             filteredTitles.add(title);
                             filteredImages.add(originalImageIds.get(i));
+                            filteredArtists.add(artist);
                         }
 
                     }
                 }
 
                 FilterResults results = new FilterResults();
-                results.values = new Object[]{filteredTitles, filteredImages};
+                results.values = new Object[]{filteredTitles, filteredImages, filteredArtists};
                 results.count = filteredTitles.size();
                 return results;
             }
@@ -142,8 +154,11 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                 Object[] filteredData = (Object[]) results.values;
                 filteredValues.clear();
                 filteredImageIds.clear();
+                filteredArtists.clear();
+
                 filteredValues.addAll((List<String>) filteredData[0]);
                 filteredImageIds.addAll((List<Integer>) filteredData[1]);
+                filteredArtists.addAll((List<String>) filteredData[2]);
                 notifyDataSetChanged();
 
                 if (resSearch != null) {

@@ -145,6 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
+                    android:backgroundTint="#FDD835"
                     android:text="Aξιολόγηση" />
 
 
@@ -162,5 +163,6 @@
         android:layout_gravity="start"
         android:background="#262626"
         app:menu="@menu/drawer_menu" />
+
 
 </androidx.drawerlayout.widget.DrawerLayout>
