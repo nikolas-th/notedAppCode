@@ -43,6 +43,8 @@ public class HomeScreen extends AppCompatActivity {
         menuButton = findViewById(R.id.menuButton);
         fab_button = findViewById(R.id.fab_search);
 
+
+        //Gia for you section:
         // 1. Initialize RecyclerView from layout
         releasesRecyclerView = findViewById(R.id.releases_recyclerview);
 
@@ -51,46 +53,15 @@ public class HomeScreen extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
         releasesRecyclerView.setLayoutManager(layoutManager);
 
-        //3. Create some sample Releases
-        List<Release> releases = new ArrayList<Release>() {{
-            // Using the pattern: title, image, rating
-            add(new Release("The Queen Is Dead", R.drawable.smithscover, "5/5", 1986,
-                    "The Smiths", "Album", null, "Seminal indie rock album", "Alternative"));
-
-            add(new Release("Paranoid", R.drawable.paranoid, "4.5/5", 1970,
-                    "Black Sabbath", "Album", null, "Classic metal album", "Heavy Metal"));
-
-            add(new Release("Meat Is Murder", R.drawable.smithscover2, "4/5", 1985,
-                    "The Smiths", "Album", null, "Controversial vegetarian-themed album", "Alternative"));
-
-            add(new Release("Swimming", R.drawable.swimming2, "3.5/5", 2018,
-                    "Mac Miller", "Album", null, "Final studio album before passing", "Hip-Hop"));
-
-            add(new Release("Strangeways, Here We Come", R.drawable.smithscover, "4/5", 1987,
-                    "The Smiths", "Album", null, "The Smiths' final studio album", "Alternative"));
-
-            add(new Release("Master of Reality", R.drawable.paranoid, "4.5/5", 1971,
-                    "Black Sabbath", "Album", null, "Pioneering doom metal sound", "Heavy Metal"));
-
-            add(new Release("Louder Than Bombs", R.drawable.smithscover, "4/5", 1987,
-                    "The Smiths", "Compilation", null, "Collection of singles and B-sides", "Alternative"));
-
-            add(new Release("The World Won't Listen", R.drawable.smithscover2, "3.5/5", 1987,
-                    "The Smiths", "Compilation", null, "International compilation album", "Alternative"));
-
-            add(new Release("Vol. 4", R.drawable.paranoid, "4/5", 1972,
-                    "Black Sabbath", "Album", null, "Experimental metal album", "Heavy Metal"));
-
-            add(new Release("Hatful of Hollow", R.drawable.smithscover2, "5/5", 1984,
-                    "The Smiths", "Compilation", null, "Early recordings and BBC sessions", "Alternative"));
-        }};
-
         // 4. Create adapter with our data and set it to RecyclerView
-        releaseAdapter = new ReleaseAdapter(releases);
+        releaseAdapter = new ReleaseAdapter(this, DBmanager.releases);
         releasesRecyclerView.setAdapter(releaseAdapter);
 
         // Optional: Improve performance if all items have same size
         releasesRecyclerView.setHasFixedSize(true);
+
+        //Gia kritikes section:
+
 
         // Otan o xrhsths pathsei to bar menu anoigei to side menu
         menuButton.setOnClickListener(v -> {
