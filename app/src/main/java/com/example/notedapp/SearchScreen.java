@@ -47,24 +47,26 @@ public class SearchScreen extends AppCompatActivity {
         
 
         Release[] items = new Release[] {
-            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.5/5)", "The Smiths"),
-            new Release("Paranoid", R.drawable.paranoid, "(2/5)", "Black Sabbath"),
-            new Release("Meat is murder", R.drawable.smithscover2, "(3/5)", "The Smiths"),
-            new Release("Swimming", R.drawable.swimming2, "(4.5/5)", "Mac Miller"),
-            new Release("Hatful of Hollow", R.drawable.smithscover, "(5/5)", "The Smiths"),
-            new Release("Paranoid", R.drawable.paranoid, "(1.4/5)", "Black Sabbath"),
-            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.8/5)", "The Smiths"),
-            new Release("Meat is murder", R.drawable.smithscover2, "(3/7)", "The Smiths"),
-            new Release("Paranoid", R.drawable.paranoid, "(3.9/5)", "Black Sabbath"),
-            new Release("Meat is murder", R.drawable.smithscover2, "(4/5)", "The Smiths")
+            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.5/5)", "The Smiths", 1984, "Album"),
+            new Release("Paranoid", R.drawable.paranoid, "(2/5)", "Black Sabbath", 1970, "Album"),
+            new Release("Meat is murder", R.drawable.smithscover2, "(3/5)", "The Smiths", 1985, "Album"),
+            new Release("Swimming", R.drawable.swimming2, "(4.5/5)", "Mac Miller", 2018, "Album"),
+            new Release("Hatful of Hollow", R.drawable.smithscover, "(5/5)", "The Smiths", 1984, "Album"),
+            new Release("Paranoid", R.drawable.paranoid, "(1.4/5)", "Black Sabbath", 1970, "Album"),
+            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.8/5)", "The Smiths", 1984, "Album"),
+            new Release("Meat is murder", R.drawable.smithscover2, "(3/7)", "The Smiths", 1985, "Album"),
+            new Release("Paranoid", R.drawable.paranoid, "(3.9/5)", "Black Sabbath", 1970, "Album"),
+            new Release("Meat is murder", R.drawable.smithscover2, "(4/5)", "The Smiths", 1985, "Album")
         };
         
 
-        // Initialize the 3 separate arrays
+        // Initialize the 6 separate arrays
         String[] titles = new String[items.length];
         int[] imageIds = new int[items.length];
         String[] ratings = new String[items.length];
         String[] artists = new String[items.length];
+        int[] year = new int[items.length];
+        String[] releaseType = new  String[items.length];
 
         // Populate them by looping through the `items` array
         for (int i = 0; i < items.length; i++) {
@@ -72,9 +74,11 @@ public class SearchScreen extends AppCompatActivity {
             imageIds[i] = items[i].imageId;
             ratings[i] = items[i].rating;
             artists[i] = items[i].artist;
+            year[i] = items[i].year;
+            releaseType[i] = items[i].releaseType;
         }
 
-        CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, resSearch);
+        CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, year, releaseType, resSearch);
         releaseList.setAdapter(adapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -99,12 +103,18 @@ public class SearchScreen extends AppCompatActivity {
                 String selectedTitle = titles[position];
                 int selectedImageId = imageIds[position];
                 String selectedArtist = artists[position];
+                int selectedYear = year[position];
+                String selectedReleaseType = releaseType[position];
+                String selectedRatings = ratings[position];
 
                 // Φτιάξε το Intent
                 Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
                 intent.putExtra("title", selectedTitle);
                 intent.putExtra("imageId", selectedImageId);
                 intent.putExtra("artist", selectedArtist);
+                intent.putExtra("year", selectedYear);
+                intent.putExtra("type", selectedReleaseType);
+                intent.putExtra("rating", selectedRatings);
 
                 // Ξεκίνα το άλλο activity
                 startActivity(intent);

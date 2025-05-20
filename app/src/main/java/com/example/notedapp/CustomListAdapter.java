@@ -1,6 +1,7 @@
 package com.example.notedapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.pdf.models.ListItem;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private final int[] imageIds;
     private  final String[] ratingIds;
     private  final String[] artists;
+    private final int[] year;
+    private final String[] releaseType;
     private List<String> originalValues;
     private List<Integer> originalImageIds;
 
@@ -31,13 +34,15 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private List<String> filteredArtists;
     private final TextView resSearch;
 
-    public CustomListAdapter(Context context, String[] values, int[] imageIds, String[] ratingIds, String[] artists,  TextView resSearch) {
+    public CustomListAdapter(Context context, String[] values, int[] imageIds, String[] ratingIds, String[] artists, int[] year, String[] releaseType,  TextView resSearch) {
         super(context, R.layout.list_item_with_icon, values);
         this.context = context;
         this.values = values;
         this.imageIds = imageIds;
         this.ratingIds = ratingIds;
         this.artists = artists;
+        this.year = year;
+        this.releaseType = releaseType;
         this.resSearch = resSearch;
         this.originalValues = Arrays.asList(values);
         this.originalImageIds = new ArrayList<>();
@@ -101,6 +106,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                     // Παίρνουμε την βαθμολογία και την ορίζουμε στο RatingBar
                     float ratingValue = Float.parseFloat(parts[0]);
                     ratingBar.setRating(ratingValue); // Ορίζουμε τη βαθμολογία
+
                 } catch (NumberFormatException e) {
                     ratingBar.setRating(0); // Προεπιλεγμένο σε περίπτωση σφάλματος
                 }
