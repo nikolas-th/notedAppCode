@@ -13,10 +13,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import androidx.recyclerview.widget.LinearSnapHelper;
+import androidx.recyclerview.widget.SnapHelper;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +30,7 @@ import java.util.List;
 public class HomeScreen extends AppCompatActivity {
     // UI Components
     private RecyclerView releasesRecyclerView;
+    private RecyclerView reviewsRecyclerView;
     private ReleaseAdapter releaseAdapter;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -61,6 +66,18 @@ public class HomeScreen extends AppCompatActivity {
         releasesRecyclerView.setHasFixedSize(true);
 
         //Gia kritikes section:
+        reviewsRecyclerView = findViewById(R.id.reviews_recycler);
+        //Configure layout manager for horizontal scrolling inside recycler view & set it
+        LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        reviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
+
+        //Create reviews adapter object with required data and set it to the Recycler View
+        ReviewAdapter reviewsAdapter = new ReviewAdapter(DBmanager.reviews);
+        reviewsRecyclerView.setAdapter(reviewsAdapter);
+
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(reviewsRecyclerView);
+
 
 
         // Otan o xrhsths pathsei to bar menu anoigei to side menu

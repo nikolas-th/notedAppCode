@@ -40,7 +40,7 @@ public class DBmanager {
     //dedomena gia ta reviews
     public static final Review[] reviews = {
         new Review("Alex123","Φοβερός δίσκος!!!", "5/5", "20/05/2025", 1),
-        new Review("Alex123","Από τους καλύτερους δίσκους!", "4.5/5", "19/05/2025", 1),
+        new Review("ouaou","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "4.5/5", "19/05/2025", 2),
     };
 
     static { // eyresh twn reviews gia kathe kykloforia
@@ -54,6 +54,15 @@ public class DBmanager {
             }
             release.setReviews(matchingReviews);
         }
+    }
+
+    public static Release getReleaseById(int id) {
+        for (Release release : releases) {
+            if (release.id == id) {
+                return release;
+            }
+        }
+        return null; // Not found
     }
 
 
