@@ -44,21 +44,10 @@ public class SearchScreen extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_view);
         menuButton = findViewById(R.id.menuButton);
 
-        
 
-        Release[] items = new Release[] {
-            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.5/5)", "The Smiths", 1984, "Album"),
-            new Release("Paranoid", R.drawable.paranoid, "(2/5)", "Black Sabbath", 1970, "Album"),
-            new Release("Meat is murder", R.drawable.smithscover2, "(3/5)", "The Smiths", 1985, "Album"),
-            new Release("Swimming", R.drawable.swimming2, "(4.5/5)", "Mac Miller", 2018, "Album"),
-            new Release("Hatful of Hollow", R.drawable.smithscover, "(5/5)", "The Smiths", 1984, "Album"),
-            new Release("Paranoid", R.drawable.paranoid, "(1.4/5)", "Black Sabbath", 1970, "Album"),
-            new Release("Hatful of Hollow", R.drawable.smithscover, "(2.8/5)", "The Smiths", 1984, "Album"),
-            new Release("Meat is murder", R.drawable.smithscover2, "(3/7)", "The Smiths", 1985, "Album"),
-            new Release("Paranoid", R.drawable.paranoid, "(3.9/5)", "Black Sabbath", 1970, "Album"),
-            new Release("Meat is murder", R.drawable.smithscover2, "(4/5)", "The Smiths", 1985, "Album")
-        };
-        
+       //pername ta dedomena apo ton pinaka releases ths bashs DBmanager
+        Release[] items = DBmanager.releases;
+
 
         // Initialize the 6 separate arrays
         String[] titles = new String[items.length];
