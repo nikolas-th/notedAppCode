@@ -2,6 +2,7 @@ package com.example.notedapp;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -27,8 +28,9 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         int year = getIntent().getIntExtra("year", -1);
         String releaseType = getIntent().getStringExtra("type");
         String rating = getIntent().getStringExtra("rating");
+        String description = getIntent().getStringExtra("description");
 
-        // emfanish dedomenwn
+
         TextView titleText = findViewById(R.id.releaseTitle);
         ImageView imageView = findViewById(R.id.itemIcon);
         TextView artistText = findViewById(R.id.releaseArtist);
@@ -36,15 +38,20 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         TextView releaseTypeText = findViewById(R.id.releaseType);
         TextView ratingText = findViewById(R.id.ratingInd);
         RatingBar ratingBar = findViewById(R.id.ratingBarTotal);
+        TextView infoText = findViewById(R.id.releaseInfoText);
+        TextView ratingTotalCnt = findViewById(R.id.releaseRevCount);
+        LinearLayout reviewsContainer = findViewById(R.id.reviewsContainer);
 
         String yearString = String.valueOf(year); //metatroph tou year se string
 
+        // emfanish dedomenwn
         titleText.setText(title);
         imageView.setImageResource(imageId);
         artistText.setText(artist);
         yearText.setText(yearString);
         releaseTypeText.setText(releaseType);
         ratingText.setText(rating);
+        infoText.setText(description);
 
         //Symplhrwma twn asteriwn me vash to ratingText
         if (ratingText != null) {
@@ -65,6 +72,31 @@ public class ReleaseInfoScreen extends AppCompatActivity {
                 ratingBar.setRating(0);
             }
         }
+
+
+        // Eμφανισε τα reviews για καθε κυκλοφορία
+        Release currentRelease = null;
+        for (Release r : DBmanager.releases) {
+            if (r.title.equals(title)) {
+                currentRelease = r;
+                break;
+            }
+        }
+
+        if (currentRelease != null) {
+            int reviewCount = currentRelease.getReviewCount(); // evresh toy plhthous twn kritikwn
+            ratingTotalCnt.setText("(" + reviewCount + ")");
+            for (Review review : DBmanager.reviews) {
+                if (review.getReleaseId() == currentRelease.id) {
+                    TextView reviewView = new TextView(this);
+                    reviewView.setText("@" + review.getUsername() + ": " + review.getComment() + " (" + review.getRating() + ")");
+                    reviewView.setTextSize(15);
+                    reviewView.setPadding(0, 8, 0, 8);
+                    reviewsContainer.addView(reviewView);
+                }
+            }
+        }
+
 
 
     }

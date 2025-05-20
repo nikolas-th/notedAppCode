@@ -20,8 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-
-
+import java.util.List;
 
 
 public class SearchScreen extends AppCompatActivity {
@@ -55,7 +54,8 @@ public class SearchScreen extends AppCompatActivity {
         String[] ratings = new String[items.length];
         String[] artists = new String[items.length];
         int[] year = new int[items.length];
-        String[] releaseType = new  String[items.length];
+        String[] releaseType = new String[items.length];
+        String[] description = new String[items.length];
 
         // Populate them by looping through the `items` array
         for (int i = 0; i < items.length; i++) {
@@ -65,6 +65,8 @@ public class SearchScreen extends AppCompatActivity {
             artists[i] = items[i].artist;
             year[i] = items[i].year;
             releaseType[i] = items[i].releaseType;
+            description[i] = items[i].description;
+
         }
 
         CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, year, releaseType, resSearch);
@@ -95,6 +97,8 @@ public class SearchScreen extends AppCompatActivity {
                 int selectedYear = year[position];
                 String selectedReleaseType = releaseType[position];
                 String selectedRatings = ratings[position];
+                String selectedDescription = description[position];
+
 
                 // Φτιάξε το Intent
                 Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
@@ -104,6 +108,7 @@ public class SearchScreen extends AppCompatActivity {
                 intent.putExtra("year", selectedYear);
                 intent.putExtra("type", selectedReleaseType);
                 intent.putExtra("rating", selectedRatings);
+                intent.putExtra("description", selectedDescription);
 
                 // Ξεκίνα το άλλο activity
                 startActivity(intent);

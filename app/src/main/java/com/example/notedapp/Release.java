@@ -3,6 +3,7 @@ package com.example.notedapp;
 import java.util.List;
 
 public class Release {
+    public int id;
     public String title;
     public int imageId;
     public String rating;
@@ -12,9 +13,11 @@ public class Release {
     public String [] tracklist;
     public String description;
     public String genre;
+    private List<Review> reviews;
 
-    public Release(String title, int imageId, String rating, int year, String artist, String releaseType, String[] tracklist, String description,
+    public Release(int id, String title, int imageId, String rating, int year, String artist, String releaseType, String[] tracklist, String description,
                    String genre) {
+        this.id = id;
         this.title = title;
         this.imageId = imageId;
         this.rating = rating;
@@ -33,6 +36,18 @@ public class Release {
         this.artist = artist;
         this.year = year;
         this.releaseType = releaseType;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public int getReviewCount() {
+        return reviews.size();
     }
 
     
