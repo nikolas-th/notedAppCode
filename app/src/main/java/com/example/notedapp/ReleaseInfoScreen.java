@@ -3,6 +3,7 @@ package com.example.notedapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,7 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         TextView infoText = findViewById(R.id.releaseInfoText);
         TextView ratingTotalCnt = findViewById(R.id.releaseRevCount);
         LinearLayout reviewsContainer = findViewById(R.id.reviewsContainer);
+        Button reviewBtn = findViewById(R.id.ReviewButton);
 
         //gia to side menu
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -137,6 +139,11 @@ public class ReleaseInfoScreen extends AppCompatActivity {
             PagerSnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(reviewsRecyclerView);
         }
+
+        reviewBtn.setOnClickListener(v ->{
+              Intent reviewScreenIntent = new Intent(ReleaseInfoScreen.this, ReviewScreen.class);
+              startActivity(reviewScreenIntent);
+                });
 
         // Otan o xrhsths pathsei to bar menu anoigei to side menu
         menuButton.setOnClickListener(v -> {
