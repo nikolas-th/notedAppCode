@@ -160,8 +160,9 @@
                         android:id="@+id/releaseRevCount"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="26dp"
-                        android:layout_marginLeft="150dp"
+                        android:layout_marginTop="28dp"
+                        android:layout_marginLeft="147dp"
+                        android:textSize="13dp"
                         android:text="(n)" />
 
                 </FrameLayout>
@@ -171,7 +172,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginTop="16dp" />
+                    android:layout_marginTop="16dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/reviews_recycler"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/ReviewButton"

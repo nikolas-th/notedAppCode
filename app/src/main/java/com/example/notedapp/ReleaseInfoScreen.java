@@ -1,18 +1,36 @@
 package com.example.notedapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReleaseInfoScreen extends AppCompatActivity {
+
+    private RecyclerView reviewsRecyclerView;
+    private NavigationView navigationView;
+    private ImageButton menuButton;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +60,12 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         TextView ratingTotalCnt = findViewById(R.id.releaseRevCount);
         LinearLayout reviewsContainer = findViewById(R.id.reviewsContainer);
 
+        //gia to side menu
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.navigation_view);
+        menuButton = findViewById(R.id.menuButton);
+
+
         String yearString = String.valueOf(year); //metatroph tou year se string
 
         // emfanish dedomenwn
@@ -52,6 +76,8 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         releaseTypeText.setText(releaseType);
         ratingText.setText(rating);
         infoText.setText(description);
+
+
 
         //Symplhrwma twn asteriwn me vash to ratingText
         if (ratingText != null) {
@@ -84,19 +110,60 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         }
 
         if (currentRelease != null) {
-            int reviewCount = currentRelease.getReviewCount(); // evresh toy plhthous twn kritikwn
-            ratingTotalCnt.setText("(" + reviewCount + ")");
+            // Δημιουργία λίστας για φιλτραρισμένες κριτικές
+            List<Review> tempList = new ArrayList<>();
             for (Review review : DBmanager.reviews) {
                 if (review.getReleaseId() == currentRelease.id) {
-                    TextView reviewView = new TextView(this);
-                    reviewView.setText("@" + review.getUsername() + ": " + review.getComment() + " (" + review.getRating() + ")");
-                    reviewView.setTextSize(15);
-                    reviewView.setPadding(0, 8, 0, 8);
-                    reviewsContainer.addView(reviewView);
+                    tempList.add(review);
                 }
             }
+
+            // Εύρεση πλήθους και μετατροπή σε πίνακα
+            int reviewCount = tempList.size();
+            Review[] filteredReviews = tempList.toArray(new Review[reviewCount]);
+
+            // Εμφάνιση πλήθους κριτικών
+            ratingTotalCnt.setText("(" + reviewCount + ")");
+
+            // Ρύθμιση RecyclerView
+            reviewsRecyclerView = findViewById(R.id.reviews_recycler);
+            LinearLayoutManager reviewsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+            reviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
+
+            // Πέρασε τον πίνακα filteredReviews στον adapter
+            ReviewAdapter reviewsAdapter = new ReviewAdapter(filteredReviews);
+            reviewsRecyclerView.setAdapter(reviewsAdapter);
+
+            PagerSnapHelper snapHelper = new PagerSnapHelper();
+            snapHelper.attachToRecyclerView(reviewsRecyclerView);
         }
 
+        // Otan o xrhsths pathsei to bar menu anoigei to side menu
+        menuButton.setOnClickListener(v -> {
+            drawerLayout.openDrawer(navigationView);
+        });
+
+        // Otan o xrhsths epileksei kati apo to side menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawers(); // kleisimo tou menu
+
+                int id = item.getItemId();
+                if (id == R.id.nav_home) {
+
+                } else if (id == R.id.nav_profil) {
+                    // Τha phgainei sto profil
+                } else if (id == R.id.nav_lists) {
+                    // Τha phgainei stis listes
+                } else if (id == R.id.nav_logout) {
+                    Intent homeIntent = new Intent(ReleaseInfoScreen.this, MainActivity.class);
+                    homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
+                    startActivity(homeIntent);
+                }
+                return true;
+            }
+        });
 
 
     }
