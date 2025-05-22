@@ -14,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class ReleaseAdapter extends RecyclerView.Adapter<ReleaseAdapter.ReleaseViewHolder> {
-    private Release[] releases;
+    private List<Release> releases;
+
     private Context context;
 
-    public ReleaseAdapter(Context context, Release[] releases) {
+    public ReleaseAdapter(Context context, List<Release> releases) {
         this.context = context;
         this.releases = releases;
     }
+
 
     @NonNull
     @Override
@@ -32,13 +34,12 @@ public class ReleaseAdapter extends RecyclerView.Adapter<ReleaseAdapter.ReleaseV
 
     @Override
     public void onBindViewHolder(@NonNull ReleaseViewHolder holder, int position) {
-        Release release = releases[position];
+        Release release = releases.get(position); // instead of releases[position]
 
         holder.title.setText(release.title);
         holder.artist.setText(release.artist);
         holder.artwork.setImageResource(release.imageId);
 
-        // 🔗 Handle click
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ReleaseInfoScreen.class);
             intent.putExtra("title", release.title);
@@ -51,10 +52,17 @@ public class ReleaseAdapter extends RecyclerView.Adapter<ReleaseAdapter.ReleaseV
         });
     }
 
+
     @Override
     public int getItemCount() {
-        return releases.length;
+        return releases.size(); // instead of releases.length
     }
+
+    public void updateData(List<Release> newReleases) {
+        this.releases = newReleases;
+        notifyDataSetChanged(); // refresh adapter
+    }
+
 
     public static class ReleaseViewHolder extends RecyclerView.ViewHolder {
         ImageView artwork;

@@ -23,14 +23,16 @@ import androidx.recyclerview.widget.SnapHelper;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 public class HomeScreen extends AppCompatActivity {
     // UI Components
     private RecyclerView releasesRecyclerView;
     private RecyclerView reviewsRecyclerView;
+    private RecyclerView newReleasesRecyclerView;
     private ReleaseAdapter releaseAdapter;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -59,7 +61,7 @@ public class HomeScreen extends AppCompatActivity {
         releasesRecyclerView.setLayoutManager(layoutManager);
 
         // 4. Create adapter with our data and set it to RecyclerView
-        releaseAdapter = new ReleaseAdapter(this, DBmanager.releases);
+        releaseAdapter = new ReleaseAdapter(this, Arrays.asList(DBmanager.releases));
         releasesRecyclerView.setAdapter(releaseAdapter);
 
         // Optional: Improve performance if all items have same size
@@ -75,10 +77,24 @@ public class HomeScreen extends AppCompatActivity {
         ReviewAdapter reviewsAdapter = new ReviewAdapter(DBmanager.reviews);
         reviewsRecyclerView.setAdapter(reviewsAdapter);
 
-        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        PagerSnapHelper snapHelper = new PagerSnapHelper(); //For review snapping while scrolling.
         snapHelper.attachToRecyclerView(reviewsRecyclerView);
 
 
+        //Gia nea releases section:
+        newReleasesRecyclerView = findViewById(R.id.new_release_recycler);
+        //COnfigure layout manager inside recycler view and set it to Horizontal
+        LinearLayoutManager newReleasesRecyclerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        newReleasesRecyclerView.setLayoutManager(newReleasesRecyclerLayoutManager);
+
+        //Get release list sorted by year using Streams API
+        List<Release> sortedByYear = Arrays.stream(DBmanager.releases)
+                .sorted((r1, r2) -> Integer.compare(r2.year, r1.year))
+                .collect(Collectors.toList());
+
+        //Make adapter object to populate
+        ReleaseAdapter newReleasesAdapter = new ReleaseAdapter(this, sortedByYear);
+        newReleasesRecyclerView.setAdapter(newReleasesAdapter);
 
         // Otan o xrhsths pathsei to bar menu anoigei to side menu
         menuButton.setOnClickListener(v -> {
