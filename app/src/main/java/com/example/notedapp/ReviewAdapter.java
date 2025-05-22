@@ -9,10 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
-    private Review[] reviews; // Array of reviews
+import java.util.List;
 
-    public ReviewAdapter(Review[] reviews) {
+public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
+    private List<Review> reviews; // Array of reviews
+
+    public ReviewAdapter(List<Review> reviews) {
         this.reviews = reviews;
     }
 
@@ -27,7 +29,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        Review review = reviews[position];
+        Review review = reviews.get(position);
 
         Release reviewedRelease = DBmanager.getReleaseById(review.getReleaseId());
 
@@ -41,7 +43,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
     @Override
     public int getItemCount() {
-        return reviews.length;
+        return reviews.size();
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {

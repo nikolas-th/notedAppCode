@@ -74,7 +74,7 @@ public class HomeScreen extends AppCompatActivity {
         reviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
 
         //Create reviews adapter object with required data and set it to the Recycler View
-        ReviewAdapter reviewsAdapter = new ReviewAdapter(DBmanager.reviews);
+        ReviewAdapter reviewsAdapter = new ReviewAdapter(Arrays.asList(DBmanager.reviews));
         reviewsRecyclerView.setAdapter(reviewsAdapter);
 
         PagerSnapHelper snapHelper = new PagerSnapHelper(); //For review snapping while scrolling.

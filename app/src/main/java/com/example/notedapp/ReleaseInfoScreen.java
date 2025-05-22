@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ReleaseInfoScreen extends AppCompatActivity {
@@ -133,7 +134,7 @@ public class ReleaseInfoScreen extends AppCompatActivity {
             reviewsRecyclerView.setLayoutManager(reviewsLayoutManager);
 
             // Πέρασε τον πίνακα filteredReviews στον adapter
-            ReviewAdapter reviewsAdapter = new ReviewAdapter(filteredReviews);
+            ReviewAdapter reviewsAdapter = new ReviewAdapter(Arrays.asList(filteredReviews));
             reviewsRecyclerView.setAdapter(reviewsAdapter);
 
             PagerSnapHelper snapHelper = new PagerSnapHelper();
