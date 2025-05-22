@@ -113,7 +113,9 @@ public class HomeScreen extends AppCompatActivity {
                 } else if (id == R.id.nav_profil) {
                     // Τha phgainei sto profil
                 } else if (id == R.id.nav_lists) {
-                    // Τha phgainei stis listes
+                    Intent myListsIntent = new Intent(HomeScreen.this, MyListsScreen.class);
+                    myListsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
+                    startActivity(myListsIntent);
                 } else if (id == R.id.nav_logout) {
                     Intent homeIntent = new Intent(HomeScreen.this, MainActivity.class);
                     homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack

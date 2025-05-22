@@ -2,6 +2,8 @@ package com.example.notedapp;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class DBmanager {
 
@@ -44,6 +46,34 @@ public class DBmanager {
         new Review("ouaou","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "4.5/5", "19/05/2025", 2),
     };
 
+    public static ReleaseList[] userLists = {
+            new ReleaseList(
+                    "johndoe",
+                    "Best of The Smiths",
+                    "A curated list of my favorite releases by The Smiths.",
+                    Arrays.asList(
+                            releases[0],
+                            releases[2],
+                            releases[4],
+                            releases[6],
+                            releases[7],
+                            releases[9]
+                    ),
+                    "2024-04-21"
+            ),
+            new ReleaseList(
+                    "johndoe",
+                    "Foundations of Heavy Metal",
+                    "A beginner-friendly dive into essential metal albums.",
+                    Arrays.asList(
+                            releases[1],
+                            releases[5],
+                            releases[8]
+                    ),
+                    "2024-04-30"
+            )
+    };
+
     static { // eyresh twn reviews gia kathe kykloforia
         // Συνδέουμε τις κριτικές με κάθε κυκλοφορία
         for (Release release : releases) {
@@ -64,6 +94,16 @@ public class DBmanager {
         }
         return null; // Not found
     }
+
+
+    public static List<ReleaseList> getListsByUser(String username) {
+        //Return all ReleaseLists objects that have been authored by a given username.
+        //Uses Streams API to get them.
+        return Arrays.asList(userLists).stream()
+                .filter(list -> list.getAuthor().equalsIgnoreCase(username))
+                .collect(Collectors.toList());
+    }
+
 
 
 }
