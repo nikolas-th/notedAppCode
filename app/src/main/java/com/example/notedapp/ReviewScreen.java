@@ -95,7 +95,7 @@ public class ReviewScreen extends AppCompatActivity {
             public void onClick(View v) {
                 String text = userInput.getText().toString().trim();
 
-                if (text.length() > 10) {
+                if (text.length() > 100) {
                     Toast.makeText(ReviewScreen.this, "Το κείμενό σου ξεπερνά τους 100 χαρακτήρες!", Toast.LENGTH_LONG).show(); //emfanish mhnymatos
                 } else {
                     // Συνέχισε με την αποθήκευση ή δημοσίευση
@@ -110,8 +110,8 @@ public class ReviewScreen extends AppCompatActivity {
                     Review newReview = new Review( "CurrentUser", text, formattedRating, today, releaseId);
                     DBmanager.addReview(newReview);
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
-                    finish();
-
+                    setResult(RESULT_OK);
+                    finish(); // Θα ενεργοποιήσει το onActivityResult της ReleaseInfo
                 }
             }
         });

@@ -110,11 +110,6 @@ public class DBmanager {
         newArray[reviews.length] = newReview;
         reviews = newArray;
 
-        // Ενημέρωση του αντίστοιχου Release
-        Release release = getReleaseById(newReview.getReleaseId());
-        if (release != null) {
-            release.getReviews().add(newReview); // Προσθήκη στη λίστα κριτικών του Release
-        }
     }
 
 
