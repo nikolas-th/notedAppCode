@@ -140,7 +140,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                     for (int i = 0; i < originalValues.size(); i++) {
                         String title = originalValues.get(i);
                         String artist = originalArtists.get(i);
-                        if (title.toLowerCase().contains(query)) { // elegxei an to keimeno anazhthshs tairiazei me kapoio stoixeio apo thn lista
+                        if (title.toLowerCase().contains(query) || artist.toLowerCase().contains(query)) { // elegxei an to keimeno anazhthshs tairiazei me ton titlo kapoiou stoixeiou apo thn lista h me ton kallitexnh
                             filteredTitles.add(title);
                             filteredImages.add(originalImageIds.get(i));
                             filteredArtists.add(artist);

@@ -40,7 +40,7 @@ public class DBmanager {
     };
 
     //dedomena gia ta reviews
-    public static final Review[] reviews = {
+    public static Review[] reviews = {
         new Review("Alex123","Φοβερός δίσκος!!!", "5/5", "20/05/2025", 1),
          new Review("Kapoios","Ο καλυτερος δίσκος των smiths!!!", "4.9/5", "21/05/2025", 1),
         new Review("ouaou","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "4.5/5", "19/05/2025", 2),
@@ -102,6 +102,19 @@ public class DBmanager {
         return Arrays.asList(userLists).stream()
                 .filter(list -> list.getAuthor().equalsIgnoreCase(username))
                 .collect(Collectors.toList());
+    }
+
+    public static void addReview(Review newReview) {
+        Review[] newArray = new Review[reviews.length + 1]; //neos pinakas me ena epipleon stoixeio
+        System.arraycopy(reviews, 0, newArray, 0, reviews.length); // Antigrafh tou pinaka reviews ston newArray
+        newArray[reviews.length] = newReview;
+        reviews = newArray;
+
+        // Ενημέρωση του αντίστοιχου Release
+        Release release = getReleaseById(newReview.getReleaseId());
+        if (release != null) {
+            release.getReviews().add(newReview); // Προσθήκη στη λίστα κριτικών του Release
+        }
     }
 
 

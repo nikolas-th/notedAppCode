@@ -3,6 +3,9 @@ package com.example.notedapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RatingBar;
 
@@ -15,8 +18,13 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class ReviewScreen extends AppCompatActivity {
 
@@ -32,12 +40,15 @@ public class ReviewScreen extends AppCompatActivity {
 
         RatingBar ratingBar = findViewById(R.id.ratingBarRev);
         TextView ratingText = findViewById(R.id.ratingText);
+        EditText userInput = findViewById(R.id.userInputText);
+        Button submitBtn = findViewById(R.id.publishBtn);
 
         //gia to side menu
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         menuButton = findViewById(R.id.menuButton);
 
+        int releaseId = getIntent().getIntExtra("releaseId", -1);
 
         //Symplhrwma tou ratingText me vash ta asteria pou eisagei o xrhsths
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -75,6 +86,33 @@ public class ReviewScreen extends AppCompatActivity {
                     startActivity(homeIntent);
                 }
                 return true;
+            }
+        });
+
+        //Otan o xrhsths ksepernaei tous 100 xarakthres ( den plhroi orous xrhshs)
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = userInput.getText().toString().trim();
+
+                if (text.length() > 10) {
+                    Toast.makeText(ReviewScreen.this, "Το κείμενό σου ξεπερνά τους 100 χαρακτήρες!", Toast.LENGTH_LONG).show(); //emfanish mhnymatos
+                } else {
+                    // Συνέχισε με την αποθήκευση ή δημοσίευση
+                    float ratingValue = ratingBar.getRating();
+                    String formattedRating = (ratingValue % 1 == 0)
+                            ? String.format("%.0f/5", ratingValue)
+                            : String.format("%.1f/5", ratingValue);
+
+                    String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+
+                    // Δημιουργία νέου Review και προσθήκη
+                    Review newReview = new Review( "CurrentUser", text, formattedRating, today, releaseId);
+                    DBmanager.addReview(newReview);
+                    Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
+                    finish();
+
+                }
             }
         });
 

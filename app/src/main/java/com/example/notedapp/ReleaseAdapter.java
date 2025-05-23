@@ -40,13 +40,14 @@ public class ReleaseAdapter extends RecyclerView.Adapter<ReleaseAdapter.ReleaseV
         holder.artist.setText(release.artist);
         holder.artwork.setImageResource(release.imageId);
 
+
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ReleaseInfoScreen.class);
             intent.putExtra("title", release.title);
             intent.putExtra("imageId", release.imageId);
             intent.putExtra("artist", release.artist);
             intent.putExtra("year", release.year);
-            intent.putExtra("type", release.genre);
+            intent.putExtra("type", release.releaseType);
             intent.putExtra("rating", release.rating);
             context.startActivity(intent);
         });

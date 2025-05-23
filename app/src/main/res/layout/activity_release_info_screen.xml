@@ -89,7 +89,7 @@
                     android:id="@+id/itemIcon"
                     android:layout_width="350dp"
                     android:layout_height="350dp"
-                    android:layout_margin="10dp"/>
+                    android:layout_margin="10dp" />
 
                 <TextView
                     android:id="@+id/theRatigns"
