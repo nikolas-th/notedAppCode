@@ -111,10 +111,8 @@ public class ReleaseInfoScreen extends AppCompatActivity {
                 break;
             }
         }
-        //metafora tou idRelease ths trexousas kykloforia sto reiview screen
-        Intent intent = new Intent(ReleaseInfoScreen.this, ReviewScreen.class);
-        intent.putExtra("releaseId", currentRelease.id);
-        startActivity(intent);
+
+
 
         if (currentRelease != null) {
             // Δημιουργία λίστας για φιλτραρισμένες κριτικές
@@ -143,13 +141,17 @@ public class ReleaseInfoScreen extends AppCompatActivity {
 
             PagerSnapHelper snapHelper = new PagerSnapHelper();
             snapHelper.attachToRecyclerView(reviewsRecyclerView);
+
+            //Otan o xrhsths pathsei to koympi gia review
+            Release finalCurrentRelease = currentRelease;
+            reviewBtn.setOnClickListener(v -> {
+                Intent reviewScreenIntent = new Intent(ReleaseInfoScreen.this, ReviewScreen.class);
+                reviewScreenIntent.putExtra("releaseId", finalCurrentRelease.id);
+                startActivity(reviewScreenIntent);
+            });
         }
 
-        //Otan o xrhsths pathsei to koympi gia review
-        reviewBtn.setOnClickListener(v -> {
-            Intent reviewScreenIntent = new Intent(ReleaseInfoScreen.this, ReviewScreen.class);
-            startActivity(reviewScreenIntent);
-        });
+
 
         // Otan o xrhsths pathsei to bar menu anoigei to side menu
         menuButton.setOnClickListener(v -> {
