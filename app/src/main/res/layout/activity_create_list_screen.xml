@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CreateListScreen">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Top App Bar -->
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/ThemeOverlay.Material3.Toolbar.Surface"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:menu="@menu/complete_menu"
+                app:navigationIcon="@drawable/outline_arrow_back_ios_24"
+                app:navigationIconTint="@android:color/white" />
+
+            <EditText
+                android:id="@+id/list_title_input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="15dp"
+                android:ems="10"
+                android:hint="Όνομα Λίστας"
+                android:inputType="text"
+                android:singleLine="true"
+                android:text="Νέα Λίστα"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
+
+            <EditText
+                android:id="@+id/list_description_input"
+                android:layout_width="191dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:hint="Περιγραφή..."
+                android:inputType="textMultiLine"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/list_title_input" />
+
+            <ScrollView
+                android:layout_width="409dp"
+                android:layout_height="559dp"
+                android:layout_marginStart="1dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/list_description_input">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/release_list_item_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_item_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="16dp"
+            android:clickable="true"
+            app:tint="#262626"
+            app:backgroundTint="@color/noted_yellow"
+            app:srcCompat="@drawable/baseline_add_24" />
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

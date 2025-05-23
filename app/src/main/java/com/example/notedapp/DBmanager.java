@@ -51,25 +51,25 @@ public class DBmanager {
                     "johndoe",
                     "Best of The Smiths",
                     "A curated list of my favorite releases by The Smiths.",
-                    Arrays.asList(
+                    new ArrayList<Release>(Arrays.asList(
                             releases[0],
                             releases[2],
                             releases[4],
                             releases[6],
                             releases[7],
                             releases[9]
-                    ),
+                    )),
                     "2024-04-21"
             ),
             new ReleaseList(
                     "johndoe",
                     "Foundations of Heavy Metal",
                     "A beginner-friendly dive into essential metal albums.",
-                    Arrays.asList(
+                    new ArrayList<>(Arrays.asList(
                             releases[1],
                             releases[5],
                             releases[8]
-                    ),
+                    )),
                     "2024-04-30"
             )
     };

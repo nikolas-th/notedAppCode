@@ -1,7 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.NotedApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">#303047</item>
+        <item name="colorOnPrimary">#FFFFFF</item> <!-- Ensures white text on toolbar -->
+        <item name="colorAccent">@color/noted_yellow</item>
     </style>
 </resources>

@@ -1,8 +1,9 @@
 package com.example.notedapp;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Release {
+public class Release implements Serializable {
     public int id;
     public String title;
     public int imageId;

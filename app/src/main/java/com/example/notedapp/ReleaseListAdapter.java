@@ -1,6 +1,7 @@
 package com.example.notedapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,8 +39,9 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
 
         // Click Behavior for each item.
         holder.itemView.setOnClickListener(v -> {
-            // Handle click if needed (e.g. open list detail screen)
-            // You can add an Intent here if needed
+            Intent myListsIntent = new Intent(context, CreateListScreen.class);
+            myListsIntent.putExtra("releaseListObject", list); //Pass ReleaseList object to activity.
+            context.startActivity(myListsIntent);
         });
     }
 
