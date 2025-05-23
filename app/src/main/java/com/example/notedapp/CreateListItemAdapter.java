@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 public class CreateListItemAdapter extends RecyclerView.Adapter<CreateListItemAdapter.ReleaseViewHolder> {
@@ -44,12 +45,23 @@ public class CreateListItemAdapter extends RecyclerView.Adapter<CreateListItemAd
         holder.artistName.setText(release.artist);
         holder.coverImage.setImageResource(release.imageId);
 
-        holder.removeButton.setOnClickListener(v -> removeClickListener.onRemoveClick(position));
+        holder.removeButton.setOnClickListener(v -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                removeClickListener.onRemoveClick(adapterPosition);
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return releaseList.size();
+    }
+
+    public void swapItems(int fromPosition, int toPosition) {
+        Collections.swap(releaseList, fromPosition, toPosition);
+        notifyItemMoved(fromPosition, toPosition);
     }
 
     public static class ReleaseViewHolder extends RecyclerView.ViewHolder {

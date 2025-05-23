@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,13 +44,43 @@ public class CreateListScreen extends AppCompatActivity {
             //Populate list RecyclerView
             LinearLayoutManager listRecyclerLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
             listItemRecycler.setLayoutManager(listRecyclerLayoutManager);
-            listItemAdapter = new CreateListItemAdapter(this, releasesList, position -> { //Initialize adapter and write remove button method
+
+            //Initialize adapter and write remove button method
+            listItemAdapter = new CreateListItemAdapter(this, releasesList, position -> {
                releasesList.remove(position);
                listItemAdapter.notifyItemRemoved(position);
                listItemAdapter.notifyItemRangeChanged(position, releasesList.size());
 
             });
+
             listItemRecycler.setAdapter(listItemAdapter);
+
+            ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
+                    ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
+
+                @Override
+                public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                      RecyclerView.ViewHolder target) {
+                    int fromPosition = viewHolder.getAdapterPosition();
+                    int toPosition = target.getAdapterPosition();
+                    listItemAdapter.swapItems(fromPosition, toPosition);
+                    return true;
+                }
+
+                @Override
+                public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                    // No swipe support here
+                }
+
+                @Override
+                public boolean isLongPressDragEnabled() {
+                    return true; // or control this manually
+                }
+            };
+
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+            itemTouchHelper.attachToRecyclerView(listItemRecycler);
+
         }
         else {
             //this is a new list, we're gonna make a new one.
