@@ -1,5 +1,6 @@
 package com.example.notedapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,12 +8,18 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -20,8 +27,9 @@ import java.util.List;
 public class CreateListScreen extends AppCompatActivity {
     private RecyclerView listItemRecycler;
     private CreateListItemAdapter listItemAdapter;
-
     private ReleaseList releaseList;
+    private ReleaseList releaseListOriginalCopy;
+    private ActivityResultLauncher<Intent> searchLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +38,11 @@ public class CreateListScreen extends AppCompatActivity {
 
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         setSupportActionBar(toolbar);
+        // Enable the back button
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         toolbar.setTitle("Επεξεργασία Λίστας"); // set title for activity top bar.
 
         listItemRecycler = findViewById(R.id.release_list_item_recycler);
@@ -38,6 +51,8 @@ public class CreateListScreen extends AppCompatActivity {
         int index = getIntent().getIntExtra("listIndex", -1);
         if (index != -1) {
             releaseList = DBmanager.getListsByUser("johndoe").get(index);
+            //Get a copy of the original object.
+            releaseListOriginalCopy = releaseList.copy();
         }
 
 
@@ -100,6 +115,32 @@ public class CreateListScreen extends AppCompatActivity {
             //this is a new list, we're gonna make a new one.
         }
 
+        searchLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        int releaseId = result.getData().getIntExtra("selectedReleaseId", -1);
+                        if (releaseId != -1) {
+                            // Add the release to your list
+                            Release selectedRelease = DBmanager.getReleaseById(releaseId);
+                            if (selectedRelease != null) {
+                                releaseList.getReleasesList().add(selectedRelease);
+                                listItemAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+
+
+        // Search button
+        FloatingActionButton addReleaseButton = findViewById(R.id.add_item_button);
+        addReleaseButton.setOnClickListener(v -> {
+            Intent searchIntent = new Intent(this, SearchScreen.class);
+            searchIntent.putExtra("selectionMode", true); // Flag to indicate we want to return a selection
+            searchLauncher.launch(searchIntent);
+        });
+
+
 
 
     }
@@ -118,6 +159,11 @@ public class CreateListScreen extends AppCompatActivity {
                 handleListEdit();
             }
 
+            return true;
+        }
+        else if (item.getItemId() == android.R.id.home) {
+            // This is the back button ID
+            showExitConfirmationDialog();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -142,5 +188,38 @@ public class CreateListScreen extends AppCompatActivity {
         finish(); // close the activity
     }
 
+    private void showExitConfirmationDialog() {
+        MaterialAlertDialogBuilder builder =  new MaterialAlertDialogBuilder(this)
+                .setTitle("Επιστροφή;")
+                .setMessage("Οι αλλαγές δεν θα διατηρηθούν.")
+                .setPositiveButton("Ναι", (dialog, which) -> {
+                    // Restore the original list
+                    if (releaseListOriginalCopy != null) {
+                        restoreOriginalList();
+                    }
+                    setResult(RESULT_CANCELED);
+                    finish();
+                })
+                .setNegativeButton("Όχι", null);
+
+        AlertDialog dialog = builder.create();
+        dialog.setOnShowListener(d -> {
+            // Get buttons after dialog is shown
+            Button positiveButton = ((AlertDialog)d).getButton(DialogInterface.BUTTON_POSITIVE);
+            Button negativeButton = ((AlertDialog)d).getButton(DialogInterface.BUTTON_NEGATIVE);
+
+            // Set colors
+            positiveButton.setTextColor(ContextCompat.getColor(this, R.color.noted_yellow));
+            negativeButton.setTextColor(ContextCompat.getColor(this, R.color.noted_yellow));
+        });
+
+        dialog.show();
+    }
+
+    private void restoreOriginalList() {
+        releaseList.setTitle(releaseListOriginalCopy.getTitle());
+        releaseList.setDescription(releaseListOriginalCopy.getDescription());
+        releaseList.setReleasesList(releaseListOriginalCopy.getReleasesList());
+    }
 
 }

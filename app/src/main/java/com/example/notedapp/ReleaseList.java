@@ -1,6 +1,7 @@
 package com.example.notedapp;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReleaseList{
@@ -54,6 +55,10 @@ public class ReleaseList{
         return releasesList;
     }
 
+    // Add this to your ReleaseList class
+    public ReleaseList copy() {
+        return new ReleaseList(this.author, this.title, this.description, this.releasesList, this.date);
+    }
     public void setReleasesList(List<Release> releasesList) {
         this.releasesList = releasesList;
     }

@@ -37,6 +37,7 @@ public class SearchScreen extends AppCompatActivity {
         ListView releaseList = findViewById(R.id.releaseList); //H lista me tis prosfates anazhthseis
         SearchView searchView = findViewById(R.id.SearchBar); //h bara anazhtishs
         TextView resSearch = findViewById(R.id.resSearch); //label "Πρόσφατες αναζητήσεις"
+        boolean isSelectionMode = getIntent().getBooleanExtra("selectionMode", false); //Gia otan epilegoume apo allo activity
 
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -56,6 +57,7 @@ public class SearchScreen extends AppCompatActivity {
         int[] year = new int[items.length];
         String[] releaseType = new String[items.length];
         String[] description = new String[items.length];
+        int[] releaseIds = new int[items.length];
 
         // Populate them by looping through the `items` array
         for (int i = 0; i < items.length; i++) {
@@ -66,10 +68,11 @@ public class SearchScreen extends AppCompatActivity {
             year[i] = items[i].year;
             releaseType[i] = items[i].releaseType;
             description[i] = items[i].description;
+            releaseIds[i] = items[i].id;
 
         }
 
-        CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, year, releaseType, resSearch);
+        CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, year, releaseType, releaseIds, resSearch);
         releaseList.setAdapter(adapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -90,28 +93,37 @@ public class SearchScreen extends AppCompatActivity {
         releaseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Πάρε τα δεδομένα που θες
-                String selectedTitle = titles[position];
-                int selectedImageId = imageIds[position];
-                String selectedArtist = artists[position];
-                int selectedYear = year[position];
-                String selectedReleaseType = releaseType[position];
-                String selectedRatings = ratings[position];
-                String selectedDescription = description[position];
+                if (isSelectionMode) { //Gia na douleuei me list. Epilegei kai epistrefei kati.
+                    // Return the selected release ID
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("selectedReleaseId", adapter.getReleaseId(position)); // Assuming Release has getId()
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                } else {
+                    // Πάρε τα δεδομένα που θες
+                    Release selectedRelease = DBmanager.getReleaseById(adapter.getReleaseId(position));
+                    String selectedTitle = selectedRelease.title;
+                    int selectedImageId = selectedRelease.imageId;
+                    String selectedArtist = selectedRelease.artist;
+                    int selectedYear = selectedRelease.year;
+                    String selectedReleaseType = selectedRelease.releaseType;
+                    String selectedRatings = selectedRelease.rating;
+                    String selectedDescription = selectedRelease.description;
 
 
-                // Φτιάξε το Intent
-                Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
-                intent.putExtra("title", selectedTitle);
-                intent.putExtra("imageId", selectedImageId);
-                intent.putExtra("artist", selectedArtist);
-                intent.putExtra("year", selectedYear);
-                intent.putExtra("type", selectedReleaseType);
-                intent.putExtra("rating", selectedRatings);
-                intent.putExtra("description", selectedDescription);
+                    // Φτιάξε το Intent
+                    Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
+                    intent.putExtra("title", selectedTitle);
+                    intent.putExtra("imageId", selectedImageId);
+                    intent.putExtra("artist", selectedArtist);
+                    intent.putExtra("year", selectedYear);
+                    intent.putExtra("type", selectedReleaseType);
+                    intent.putExtra("rating", selectedRatings);
+                    intent.putExtra("description", selectedDescription);
 
-                // Ξεκίνα το άλλο activity
-                startActivity(intent);
+                    // Ξεκίνα το άλλο activity
+                    startActivity(intent);
+                }
             }
         });
 

@@ -33,8 +33,10 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private List<Integer> filteredImageIds;
     private List<String> filteredArtists;
     private final TextView resSearch;
+    private List<Integer> originalReleaseIds;
+    private List<Integer> filteredReleaseIds;
 
-    public CustomListAdapter(Context context, String[] values, int[] imageIds, String[] ratingIds, String[] artists, int[] year, String[] releaseType,  TextView resSearch) {
+    public CustomListAdapter(Context context, String[] values, int[] imageIds, String[] ratingIds, String[] artists, int[] year, String[] releaseType,  int[] releaseIds ,TextView resSearch) {
         super(context, R.layout.list_item_with_icon, values);
         this.context = context;
         this.values = values;
@@ -48,7 +50,9 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         this.originalImageIds = new ArrayList<>();
         this.originalArtists = Arrays.asList(artists);
         for (int id : imageIds) originalImageIds.add(id);
-
+        this.originalReleaseIds = new ArrayList<>();
+        for (int id : releaseIds) originalReleaseIds.add(id);
+        this.filteredReleaseIds = new ArrayList<>(originalReleaseIds);
         this.filteredValues = new ArrayList<>(originalValues);
         this.filteredImageIds = new ArrayList<>(originalImageIds);
         this.filteredArtists = new ArrayList<>(originalArtists);
@@ -64,6 +68,13 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     @Override
     public String getItem(int position) {
         return filteredValues.get(position); //evresh ths kykloforias poy anazhthse o xrhsths
+    }
+
+    public int getReleaseId(int position) {
+        if (position >= 0 && position < filteredReleaseIds.size()) {
+            return filteredReleaseIds.get(position);
+        }
+        return -1;
     }
 
     @Override
@@ -128,6 +139,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                 List<String> filteredTitles = new ArrayList<>();
                 List<Integer> filteredImages = new ArrayList<>();
                 List<String> filteredArtists = new ArrayList<>();
+                List<Integer> filteredIds = new ArrayList<>();
 
                 if (constraint == null || constraint.length() == 0) { //an den yparxei keimeno anazhthshs
                     //epistrefei tis arxikes times
@@ -135,6 +147,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                     filteredTitles = new ArrayList<>(originalValues);
                     filteredImages = new ArrayList<>(originalImageIds);
                     filteredArtists = new ArrayList<>(originalArtists);
+                    filteredIds = new ArrayList<>(originalReleaseIds);
                 } else {
                     String query = constraint.toString().toLowerCase().trim(); // yparxei keimeno anazhthshs
                     for (int i = 0; i < originalValues.size(); i++) {
@@ -144,13 +157,14 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                             filteredTitles.add(title);
                             filteredImages.add(originalImageIds.get(i));
                             filteredArtists.add(artist);
+                            filteredIds.add(originalReleaseIds.get(i));
                         }
 
                     }
                 }
 
                 FilterResults results = new FilterResults();
-                results.values = new Object[]{filteredTitles, filteredImages, filteredArtists};
+                results.values = new Object[]{filteredTitles, filteredImages, filteredArtists, filteredIds};
                 results.count = filteredTitles.size();
                 return results;
             }
@@ -161,10 +175,12 @@ public class CustomListAdapter extends ArrayAdapter<String> {
                 filteredValues.clear();
                 filteredImageIds.clear();
                 filteredArtists.clear();
+                filteredReleaseIds.clear();
 
                 filteredValues.addAll((List<String>) filteredData[0]);
                 filteredImageIds.addAll((List<Integer>) filteredData[1]);
                 filteredArtists.addAll((List<String>) filteredData[2]);
+                filteredReleaseIds.addAll((List<Integer>) filteredData[3]);
                 notifyDataSetChanged();
 
                 if (resSearch != null) {
