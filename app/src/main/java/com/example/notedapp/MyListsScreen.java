@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -22,6 +24,10 @@ public class MyListsScreen extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageButton menuButton;
     private RecyclerView listRecyclerView;
+    private List<ReleaseList> usersLists;
+    private ReleaseListAdapter releaseListAdapter;
+    private ActivityResultLauncher<Intent> editListLauncher;
+
 
 
 
@@ -37,7 +43,22 @@ public class MyListsScreen extends AppCompatActivity {
 
         //Get user's lists.
         //TODO: get user's name from UserSession class.
-        List<ReleaseList> usersLists = DBmanager.getListsByUser("johndoe");
+        usersLists = DBmanager.getListsByUser("johndoe");
+
+        // Initialize the launcher
+        editListLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Refresh your data and update the adapter
+                        // Simple toast with default duration (SHORT)
+                        Toast.makeText(this, "Η λίστα αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
+                        usersLists = DBmanager.getListsByUser("johndoe");
+                        releaseListAdapter.notifyDataSetChanged();
+                    }
+                });
+
+
 
         //If user has lists, hide message to add more and display them.
         if (!usersLists.isEmpty()){
@@ -50,7 +71,7 @@ public class MyListsScreen extends AppCompatActivity {
             listRecyclerView.setLayoutManager(listRecyclerLayoutManager);
 
             //Set up ReleaseListAdapter
-            ReleaseListAdapter releaseListAdapter = new ReleaseListAdapter(this, usersLists);
+            releaseListAdapter = new ReleaseListAdapter(this, usersLists, editListLauncher);
             listRecyclerView.setAdapter(releaseListAdapter);
         }
 

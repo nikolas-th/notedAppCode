@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,10 +18,12 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
 
     private final Context context;
     private final List<ReleaseList> releaseLists;
+    private final ActivityResultLauncher<Intent> launcher;
 
-    public ReleaseListAdapter(Context context, List<ReleaseList> releaseLists) {
+    public ReleaseListAdapter(Context context, List<ReleaseList> releaseLists, ActivityResultLauncher<Intent> launcher) {
         this.context = context;
         this.releaseLists = releaseLists;
+        this.launcher = launcher;
     }
 
     @NonNull
@@ -37,11 +40,11 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
         holder.authorTextView.setText(list.getAuthor());
         holder.dateTextView.setText(list.getDate());
 
-        // Click Behavior for each item.
+        // Click Behavior for each item
         holder.itemView.setOnClickListener(v -> {
             Intent myListsIntent = new Intent(context, CreateListScreen.class);
             myListsIntent.putExtra("listIndex", position);
-            context.startActivity(myListsIntent);
+            launcher.launch(myListsIntent); 
         });
     }
 
