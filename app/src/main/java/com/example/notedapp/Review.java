@@ -1,8 +1,7 @@
 package com.example.notedapp;
 
-import java.io.Serializable;
 
-public class Review implements Serializable {
+public class Review {
     private String username;
     private String comment;
     private String rating;

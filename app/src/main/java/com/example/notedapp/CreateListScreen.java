@@ -1,6 +1,10 @@
 package com.example.notedapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,18 +21,25 @@ public class CreateListScreen extends AppCompatActivity {
     private RecyclerView listItemRecycler;
     private CreateListItemAdapter listItemAdapter;
 
+    private ReleaseList releaseList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_list_screen);
 
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle("Επεξεργασία Λίστας"); // set title for activity top bar.
 
         listItemRecycler = findViewById(R.id.release_list_item_recycler);
 
         //Get extra info from intent
-        ReleaseList releaseList = (ReleaseList) getIntent().getSerializableExtra("releaseListObject");
+        int index = getIntent().getIntExtra("listIndex", -1);
+        if (index != -1) {
+            releaseList = DBmanager.getListsByUser("johndoe").get(index);
+        }
+
 
         if (releaseList != null){
             //releaseList != empty, we're working on an existing list.
@@ -55,6 +66,7 @@ public class CreateListScreen extends AppCompatActivity {
 
             listItemRecycler.setAdapter(listItemAdapter);
 
+            //Drag and drop reordering behavior.
             ItemTouchHelper.SimpleCallback callback = new ItemTouchHelper.SimpleCallback(
                     ItemTouchHelper.UP | ItemTouchHelper.DOWN, 0) {
 
@@ -81,6 +93,8 @@ public class CreateListScreen extends AppCompatActivity {
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
             itemTouchHelper.attachToRecyclerView(listItemRecycler);
 
+            //Complete button.
+
         }
         else {
             //this is a new list, we're gonna make a new one.
@@ -89,4 +103,44 @@ public class CreateListScreen extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.complete_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_complete) {
+            //Call method to handle completed ReleaseList.
+            if (releaseList != null){
+                handleListEdit();
+            }
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void handleNewListCompletion() {
+        String newTitle = ((EditText) findViewById(R.id.list_title_input)).getText().toString();
+        String newDescription = ((EditText) findViewById(R.id.list_description_input)).getText().toString();
+
+    }
+
+    private void handleListEdit() {
+        String newTitle = ((EditText) findViewById(R.id.list_title_input)).getText().toString();
+        String newDescription = ((EditText) findViewById(R.id.list_description_input)).getText().toString();
+        //Save new list details
+        releaseList.setTitle(newTitle);
+        releaseList.setDescription(newDescription);
+
+        // Return to previous activity
+        Intent resultIntent = new Intent();
+        setResult(RESULT_OK, resultIntent); // set result code and data
+        finish(); // close the activity
+    }
+
+
 }

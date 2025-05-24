@@ -3,7 +3,7 @@ package com.example.notedapp;
 import java.io.Serializable;
 import java.util.List;
 
-public class Release implements Serializable {
+public class Release {
     public int id;
     public String title;
     public int imageId;

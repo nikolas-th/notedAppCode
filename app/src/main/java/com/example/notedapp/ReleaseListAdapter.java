@@ -40,7 +40,7 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
         // Click Behavior for each item.
         holder.itemView.setOnClickListener(v -> {
             Intent myListsIntent = new Intent(context, CreateListScreen.class);
-            myListsIntent.putExtra("releaseListObject", list); //Pass ReleaseList object to activity.
+            myListsIntent.putExtra("listIndex", position);
             context.startActivity(myListsIntent);
         });
     }

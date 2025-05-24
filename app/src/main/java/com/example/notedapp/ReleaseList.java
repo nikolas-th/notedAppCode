@@ -1,10 +1,10 @@
 package com.example.notedapp;
 
-import java.io.Serializable;
+
 import java.util.List;
 
-public class ReleaseList implements Serializable {
-    //Serializable super class added in order to make this class able to be passed to another activity.
+public class ReleaseList{
+
     private String author;
     private String title;
     private String description;
