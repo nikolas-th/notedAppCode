@@ -147,6 +147,10 @@ public class SearchScreen extends AppCompatActivity {
                     // Τha phgainei sto profil
                 } else if (id == R.id.nav_lists) {
                         // Τha phgainei stis listes
+                    Intent myListsIntent = new Intent(SearchScreen.this, MyListsScreen.class);
+                    myListsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
+                    startActivity(myListsIntent);
+
                 } else if (id == R.id.nav_logout) {
                     finish(); // eksodos
                 }
