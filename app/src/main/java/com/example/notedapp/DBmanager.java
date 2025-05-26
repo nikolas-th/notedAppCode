@@ -3,6 +3,7 @@ package com.example.notedapp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DBmanager {
@@ -61,7 +62,7 @@ public class DBmanager {
 
     public static ReleaseList[] userLists = {
             new ReleaseList(
-                    "johndoe",
+                    "nikos_kal",
                     "Best of The Smiths",
                     "A curated list of my favorite releases by The Smiths.",
                     new ArrayList<Release>(Arrays.asList(
@@ -75,7 +76,7 @@ public class DBmanager {
                     "2024-04-21"
             ),
             new ReleaseList(
-                    "johndoe",
+                    "nikos_kal",
                     "Foundations of Heavy Metal",
                     "A beginner-friendly dive into essential metal albums.",
                     new ArrayList<>(Arrays.asList(
@@ -116,6 +117,15 @@ public class DBmanager {
             }
         }
         return null; // Not found
+    }
+
+    public static int getUserIdByUsername(String username){
+        for (User user : users) {
+            if (Objects.equals(user.getUsername(), username)) {
+                return user.getId();
+            }
+        }
+        return -1;
     }
 
 

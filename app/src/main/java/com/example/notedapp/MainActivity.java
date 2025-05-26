@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (!username.isEmpty() && !password.isEmpty()) {
                 // Αντί για Toast, ανοίγουμε το MainActivity
+                //Check an einai swsta
+                //login
+                UserSession.setUserId(DBmanager.getUserIdByUsername(username));
                 Intent intent = new Intent(MainActivity.this, HomeScreen.class);
                 startActivity(intent);
                 finish(); // Προαιρετικό: κλείνει το LoginActivity ώστε να μην πάει πίσω με το back button
