@@ -122,6 +122,9 @@ public class ReviewScreen extends AppCompatActivity {
                     DBmanager.addReview(newReview);
                     revCounter ++;
                     DBmanager.getUserById(UserSession.getUserId()).setReviewCounter(revCounter) ;
+                    if(revCounter >= 2){
+                        //kalese edw thn synarthsh
+                    }
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish(); // Θα ενεργοποιήσει το onActivityResult της ReleaseInfo
