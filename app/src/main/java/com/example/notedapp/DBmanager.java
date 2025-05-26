@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class DBmanager {
 
-    public static final User[] users = {
+    public static User[] users = {
             new User(1, "Artist", "Gold", "nikos_kal", "pass123", 25),
             new User(2, "User", "Silver", "maria89", "maria@123", 8),
             new User(3, "User", "Bronze", "giorgos_p", "gp_pass", 3),
@@ -147,6 +147,13 @@ public class DBmanager {
 
     }
 
+    public static void addUser(User newUser){
+        User[] newArray = new User[users.length + 1]; //neos pinakas me ena epipleon stoixeio
+        System.arraycopy(users, 0, newArray, 0, users.length); // Antigrafh tou pinaka reviews ston newArray
+        newArray[users.length] = newUser;
+        users = newArray;
+
+    }
 
 
 }
