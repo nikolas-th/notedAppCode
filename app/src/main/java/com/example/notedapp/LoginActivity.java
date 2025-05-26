@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
             if (!username.isEmpty() && !password.isEmpty()) {
                 // Αντί για Toast, ανοίγουμε το MainActivity
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, HomeScreen.class);
                 startActivity(intent);
                 finish(); // Προαιρετικό: κλείνει το LoginActivity ώστε να μην πάει πίσω με το back button
             } else {

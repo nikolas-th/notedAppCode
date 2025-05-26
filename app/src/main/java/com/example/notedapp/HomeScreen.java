@@ -101,7 +101,8 @@ public class HomeScreen extends AppCompatActivity {
             drawerLayout.openDrawer(navigationView);
         });
 
-        // Otan o xrhsths epileksei kati apo to side menu
+
+    // Otan o xrhsths epileksei kati apo to side menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -111,16 +112,24 @@ public class HomeScreen extends AppCompatActivity {
                 if (id == R.id.nav_home) {
 
                 } else if (id == R.id.nav_profil) {
-                    // Τha phgainei sto profil
+                    // Tha phgainei sto profil
+
                 } else if (id == R.id.nav_lists) {
                     Intent myListsIntent = new Intent(HomeScreen.this, MyListsScreen.class);
                     myListsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
                     startActivity(myListsIntent);
+
+                } else if (id == R.id.nav_history) {
+                    Intent historyIntent = new Intent(HomeScreen.this, HistoryActivity.class);
+                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(historyIntent);
+
                 } else if (id == R.id.nav_logout) {
                     Intent homeIntent = new Intent(HomeScreen.this, MainActivity.class);
                     homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
                     startActivity(homeIntent);
                 }
+
                 return true;
             }
         });
