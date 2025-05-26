@@ -11,6 +11,8 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -33,6 +35,8 @@ public class ReleaseInfoScreen extends AppCompatActivity {
     private NavigationView navigationView;
     private ImageButton menuButton;
     private DrawerLayout drawerLayout;
+    private ActivityResultLauncher<Intent> reviewActivityLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +116,17 @@ public class ReleaseInfoScreen extends AppCompatActivity {
             }
         }
 
+        reviewActivityLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Refresh the reviews
+                        refreshReviews();
+                    }
+                }
+        );
+
+
 
 
         if (currentRelease != null) {
@@ -147,8 +162,9 @@ public class ReleaseInfoScreen extends AppCompatActivity {
             reviewBtn.setOnClickListener(v -> {
                 Intent reviewScreenIntent = new Intent(ReleaseInfoScreen.this, ReviewScreen.class);
                 reviewScreenIntent.putExtra("releaseId", finalCurrentRelease.id);
-                startActivity(reviewScreenIntent);
+                reviewActivityLauncher.launch(reviewScreenIntent);
             });
+
         }
 
 
@@ -181,5 +197,37 @@ public class ReleaseInfoScreen extends AppCompatActivity {
         });
 
     }
+
+    private void refreshReviews() {
+        TextView ratingTotalCnt = findViewById(R.id.releaseRevCount);
+
+        Release currentRelease = null;
+        String title = getIntent().getStringExtra("title");
+
+        for (Release r : DBmanager.releases) {
+            if (r.title.equals(title)) {
+                currentRelease = r;
+                break;
+            }
+        }
+
+        if (currentRelease != null) {
+            List<Review> tempList = new ArrayList<>();
+            for (Review review : DBmanager.reviews) {
+                if (review.getReleaseId() == currentRelease.id) {
+                    tempList.add(review);
+                }
+            }
+
+            int reviewCount = tempList.size();
+            Review[] filteredReviews = tempList.toArray(new Review[reviewCount]);
+
+            ratingTotalCnt.setText("(" + reviewCount + ")");
+
+            ReviewAdapter reviewsAdapter = new ReviewAdapter(Arrays.asList(filteredReviews));
+            reviewsRecyclerView.setAdapter(reviewsAdapter);
+        }
+    }
+
 
 }
