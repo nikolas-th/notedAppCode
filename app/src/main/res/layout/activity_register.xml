@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Logo -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/noted_logo"
+            android:layout_marginTop="32dp"
+            android:contentDescription="App Logo" />
+
+        <!-- Τίτλος -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Δημιουργία Λογαριασμού"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/yellow_primary"
+            android:layout_marginTop="12dp" />
+
+        <!-- Username -->
+        <EditText
+            android:id="@+id/editUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Όνομα Χρήστη"
+            android:textColorHint="#666666"
+            android:layout_marginTop="24dp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:maxLines="1" />
+
+        <!-- Email -->
+        <EditText
+            android:id="@+id/editEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:textColorHint="#666666"
+            android:layout_marginTop="12dp"
+            android:inputType="textEmailAddress"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:imeOptions="actionNext"/>
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Κωδικός"
+            android:textColorHint="#666666"
+            android:layout_marginTop="12dp"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:imeOptions="actionNext"/>
+
+        <!-- Confirm Password -->
+        <EditText
+            android:id="@+id/editConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Επιβεβαίωση Κωδικού"
+            android:textColorHint="#666666"
+            android:layout_marginTop="12dp"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:imeOptions="actionDone"/>
+
+        <!-- Register Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Εγγραφή"
+            android:layout_marginTop="24dp"
+            android:padding="12dp"
+            style="@style/Widget.MyFirstApp.Button"/>
+
+        <!-- Link to Login -->
+        <TextView
+            android:id="@+id/loginLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Έχετε ήδη λογαριασμό; Συνδεθείτε"
+            android:textColor="@color/green_primary"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>
