@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import com.google.android.material.navigation.NavigationView;
 public class OtherUsersActivity extends AppCompatActivity {
     private Button followbutton;
     private ImageView profilepicture;
-    private EditText username;
+    private TextView username;
     private NavigationView navigationView;
     private ImageButton menuButton;
 
@@ -26,10 +27,9 @@ public class OtherUsersActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        followbutton = findViewById(R.id.button);
         profilepicture = findViewById(R.id.imageView4);
         username = findViewById(R.id.editTextText);
-        navigationView = findViewById(R.id.fab_search);
+        //navigationView = findViewById(R.id.fab_search);
         menuButton = findViewById(R.id.menuButton);
 
         super.onCreate(savedInstanceState);
