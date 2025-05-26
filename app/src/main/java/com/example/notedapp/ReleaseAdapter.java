@@ -49,6 +49,8 @@ public class ReleaseAdapter extends RecyclerView.Adapter<ReleaseAdapter.ReleaseV
             intent.putExtra("year", release.year);
             intent.putExtra("type", release.releaseType);
             intent.putExtra("rating", release.rating);
+            intent.putExtra("description", release.description);
+
             context.startActivity(intent);
         });
     }
