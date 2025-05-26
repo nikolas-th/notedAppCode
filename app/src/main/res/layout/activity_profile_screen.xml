@@ -53,6 +53,33 @@
         app:layout_constraintVertical_bias="0.107"
         tools:text="Account" />
 
+    <LinearLayout
+        android:layout_width="421dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:contentDescription="Menu"
+            android:padding="12dp"
+            android:src="@drawable/ic_menu" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="81dp"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/notedlogo" />
+
+    </LinearLayout>
+
+
     <TextView
         android:id="@+id/textView5"
         android:layout_width="153dp"
@@ -64,21 +91,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.288" />
-
-    <ImageButton
-        android:id="@+id/menuButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:contentDescription="Menu"
-        android:padding="12dp"
-        android:src="@drawable/ic_menu"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.022"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -95,6 +107,7 @@
         android:id="@+id/button3"
         android:layout_width="267dp"
         android:layout_height="70dp"
+        android:backgroundTint="#EB4141"
         android:text="Log Out"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -104,21 +117,6 @@
         app:layout_constraintVertical_bias="0.947" />
 
     <TextView
-        android:id="@+id/menuLabel3"
-        android:layout_width="80dp"
-        android:layout_height="33dp"
-        android:paddingStart="0dp"
-        android:text="Noted🎶"
-        android:textColor="#FDD835"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.022" />
-
-    <EditText
         android:id="@+id/editTextTextEmailAddress2"
         android:layout_width="188dp"
         android:layout_height="52dp"
@@ -126,6 +124,7 @@
         android:inputType="textEmailAddress"
         android:text="user@example.com"
         android:textAppearance="user@example.com"
+        android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
