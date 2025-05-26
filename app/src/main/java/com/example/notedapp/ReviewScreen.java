@@ -1,7 +1,9 @@
 package com.example.notedapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +13,7 @@ import android.widget.RatingBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.core.graphics.Insets;
@@ -33,6 +36,8 @@ public class ReviewScreen extends AppCompatActivity {
     private ImageButton menuButton;
     private DrawerLayout drawerLayout;
 
+    private LottieAnimationView confettiAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,9 @@ public class ReviewScreen extends AppCompatActivity {
         TextView ratingText = findViewById(R.id.ratingText);
         EditText userInput = findViewById(R.id.userInputText);
         Button submitBtn = findViewById(R.id.publishBtn);
+
+        confettiAnimation = findViewById(R.id.confettiAnimation); // ✅ Σύνδεση με το layout
+
 
         //gia to side menu
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -124,6 +132,7 @@ public class ReviewScreen extends AppCompatActivity {
                     DBmanager.getUserById(UserSession.getUserId()).setReviewCounter(revCounter) ;
                     if(revCounter >= 2){
                         //kalese edw thn synarthsh
+                        playConfettiThenShowDialog();
                     }
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
@@ -134,6 +143,42 @@ public class ReviewScreen extends AppCompatActivity {
             }
         });
 
+    }
+    private void playConfettiThenShowDialog() {
+        confettiAnimation.setVisibility(View.VISIBLE);
+        confettiAnimation.playAnimation();
+
+        new Handler().postDelayed(() -> {
+            confettiAnimation.cancelAnimation();
+            confettiAnimation.setVisibility(View.GONE);
+            showRankEarnedDialog(ReviewScreen.this, "Gold");
+        }, 1000);
+    }
+
+    private void showRankEarnedDialog(Context context, final String rankName) {
+        new AlertDialog.Builder(context)
+                .setTitle("Συγχαρητήρια!")
+                .setMessage("Υποβάλατε 100 κριτικές και κερδίσατε τον τίτλο " + rankName + "!")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                    showRankVisibilityDialog(context);
+                })
+                .show();
+    }
+
+    private void showRankVisibilityDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("Επιλογή")
+                .setMessage("Θέλετε να καταστήσετε το rank σας εμφανές στο προφίλ σας;")
+                .setPositiveButton("Ναι", (dialog, which) -> {
+                    dialog.dismiss();
+                    // TODO: Κάνε κάτι με την επιλογή "Ναι"
+                })
+                .setNegativeButton("Όχι", (dialog, which) -> {
+                    dialog.dismiss();
+                    // TODO: Κάνε κάτι με την επιλογή "Όχι"
+                })
+                .show();
     }
 
 }
