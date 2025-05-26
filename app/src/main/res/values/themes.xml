@@ -15,4 +15,12 @@
     <style name="Theme.NotedApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.NotedApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.MyFirstApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Τα δικά σου χρώματα -->
+        <item name="colorPrimary">@color/green_primary</item>
+        <item name="colorPrimaryVariant">@color/yellow_primary</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/green_secondary</item>
+    </style>
 </resources>

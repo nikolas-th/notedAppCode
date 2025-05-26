@@ -1,0 +1,21 @@
+<resources>
+    <style name="Widget.MyFirstApp.Button" parent="Widget.MaterialComponents.Button">
+        <!-- Χρώμα background -->
+        <item name="backgroundTint">@color/green_primary</item>
+
+        <!-- Γωνίες -->
+        <item name="cornerRadius">12dp</item>
+
+        <!-- Μέγεθος -->
+
+
+        <!-- Χρώμα κειμένου -->
+        <item name="android:textColor">@android:color/white</item>
+
+        <!-- Ύψος κειμένου -->
+        <item name="android:textAllCaps">false</item>
+
+        <item name="rippleColor">@color/yellow_primary</item>
+
+    </style>
+</resources>

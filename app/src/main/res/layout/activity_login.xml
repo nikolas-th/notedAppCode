@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <!-- Logo -->
+        <ImageView
+            android:id="@+id/logoImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/noted_logo"
+            android:layout_marginTop="32dp"
+            android:contentDescription="App Logo" />
+
+        <!-- Action -->
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Συνδεθείτε"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#fec527"
+            android:layout_marginTop="12dp" />
+
+        <!-- Username -->
+        <EditText
+            android:id="@+id/editUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Όνομα Χρήστη"
+            android:textColorHint="#666666"
+            android:layout_marginTop="32dp"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:maxLines="1"
+            android:inputType="text"
+            android:imeOptions="actionNext"
+            android:nextFocusDown="@+id/editPassword"/>
+
+        <!-- Password -->
+        <EditText
+            android:id="@+id/editPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Κωδικός"
+            android:layout_marginTop="16dp"
+            android:inputType="textPassword"
+            android:textColorHint="#666666"
+            android:padding="12dp"
+            android:background="@drawable/edittext_background"
+            android:textColor="#000000"
+            android:imeOptions="actionDone"/>
+
+        <!-- Remember me -->
+        <CheckBox
+            android:id="@+id/checkboxRemember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Να με θυμάσαι"
+            android:layout_marginTop="12dp"
+            android:textColor="#444444" />
+
+        <!-- Login Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            style="@style/Widget.MyFirstApp.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:padding="12dp"
+            android:text="Σύνδεση" />
+
+        <!-- Register link -->
+        <TextView
+            android:id="@+id/registerLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Δεν έχετε λογαριασμό; Εγγραφή"
+            android:textColor="#b8c327"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+</ScrollView>
