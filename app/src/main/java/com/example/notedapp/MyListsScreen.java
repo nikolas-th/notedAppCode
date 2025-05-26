@@ -43,7 +43,7 @@ public class MyListsScreen extends AppCompatActivity {
 
         //Get user's lists.
         //TODO: get user's name from UserSession class.
-        usersLists = DBmanager.getListsByUser("johndoe");
+        usersLists = DBmanager.getListsByUser(DBmanager.getUserById(UserSession.getUserId()).getUsername());
 
         // Initialize the launcher
         editListLauncher = registerForActivityResult(
@@ -95,6 +95,10 @@ public class MyListsScreen extends AppCompatActivity {
                     // Τha phgainei sto profil
                 } else if (id == R.id.nav_lists) {
                     //tipota
+                }else if (id == R.id.nav_history) {
+                    Intent historyIntent = new Intent(MyListsScreen.this, HistoryActivity.class);
+                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(historyIntent);
                 } else if (id == R.id.nav_logout) {
                     Intent logoutIntent = new Intent(MyListsScreen.this, MainActivity.class);
                     logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack

@@ -62,7 +62,7 @@ public class DBmanager {
 
     public static ReleaseList[] userLists = {
             new ReleaseList(
-                    "johndoe",
+                    "nikos_kal",
                     "Best of The Smiths",
                     "A curated list of my favorite releases by The Smiths.",
                     new ArrayList<Release>(Arrays.asList(
@@ -76,7 +76,7 @@ public class DBmanager {
                     "2024-04-21"
             ),
             new ReleaseList(
-                    "johndoe",
+                    "nikos_kal",
                     "Foundations of Heavy Metal",
                     "A beginner-friendly dive into essential metal albums.",
                     new ArrayList<>(Arrays.asList(
