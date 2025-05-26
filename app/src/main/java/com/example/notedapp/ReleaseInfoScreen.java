@@ -128,7 +128,6 @@ public class ReleaseInfoScreen extends AppCompatActivity {
 
 
 
-
         if (currentRelease != null) {
             // Δημιουργία λίστας για φιλτραρισμένες κριτικές
             List<Review> tempList = new ArrayList<>();

@@ -109,8 +109,9 @@ public class ReviewScreen extends AppCompatActivity {
 
                     String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
 
+
                     // Δημιουργία νέου Review και προσθήκη
-                    Review newReview = new Review( "CurrentUser", text, formattedRating, today, releaseId);
+                    Review newReview = new Review( UserSession.getUserId(), text, formattedRating, today, releaseId);
                     DBmanager.addReview(newReview);
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);

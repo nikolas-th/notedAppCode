@@ -7,6 +7,19 @@ import java.util.stream.Collectors;
 
 public class DBmanager {
 
+    public static final User[] users = {
+            new User(1, "Artist", "Gold", "nikos_kal", "pass123", 25),
+            new User(2, "User", "Silver", "maria89", "maria@123", 8),
+            new User(3, "User", "Bronze", "giorgos_p", "gp_pass", 3),
+            new User(4, "Artist", "Platinum", "eleni_music", "el3n1P@ss", 40),
+            new User(5, "User", "Gold", "alex_theo", "al3xTh90", 15),
+            new User(6, "Artist", "Silver", "dimitris.art", "dim@rts!", 10),
+            new User(7, "User", "Bronze", "sofia.k", "sofia1234", 2),
+            new User(8, "Artist", "Gold", "katerina_v", "katV!2024", 18),
+            new User(9, "User", "Silver", "manolis92", "man@pass", 7),
+            new User(10, "User", "Bronze", "vasiliki_l", "vassil1ki", 1)
+    };
+
     public static final Release[] releases = {
             new Release(1,"The Queen Is Dead", R.drawable.smithscover, "5/5", 1986,
                     "The Smiths", "Album", null, "Seminal indie rock album", "Alternative"),
@@ -41,9 +54,9 @@ public class DBmanager {
 
     //dedomena gia ta reviews
     public static Review[] reviews = {
-        new Review("Alex123","Φοβερός δίσκος!!!", "5/5", "20/05/2025", 1),
-         new Review("Kapoios","Ο καλυτερος δίσκος των smiths!!!", "4.9/5", "21/05/2025", 1),
-        new Review("ouaou","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "4.5/5", "19/05/2025", 2),
+        new Review(1,"Φοβερός δίσκος!!!", "5/5", "20/05/2025", 1),
+         new Review(2,"Ο καλυτερος δίσκος των smiths!!!", "4.9/5", "21/05/2025", 1),
+        new Review(3,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "4.5/5", "19/05/2025", 2),
     };
 
     public static ReleaseList[] userLists = {
@@ -94,6 +107,18 @@ public class DBmanager {
         }
         return null; // Not found
     }
+
+    //pernei id kai epistrefei username
+    public static User getUserById(int id) {
+        for (User user : users) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null; // Not found
+    }
+
+
 
 
     public static List<ReleaseList> getListsByUser(String username) {
