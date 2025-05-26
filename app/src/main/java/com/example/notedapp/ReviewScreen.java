@@ -12,11 +12,12 @@ import android.widget.RatingBar;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.airbnb.lottie.LottieAnimationView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -114,16 +115,22 @@ public class ReviewScreen extends AppCompatActivity {
 
                     String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
 
+                    int revCounter =  DBmanager.getUserById(UserSession.getUserId()).getReviewCounter() ;
 
                     // Δημιουργία νέου Review και προσθήκη
                     Review newReview = new Review( UserSession.getUserId(), text, formattedRating, today, releaseId);
                     DBmanager.addReview(newReview);
+                    revCounter ++;
+                    DBmanager.getUserById(UserSession.getUserId()).setReviewCounter(revCounter) ;
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
                     setResult(RESULT_OK);
                     finish(); // Θα ενεργοποιήσει το onActivityResult της ReleaseInfo
+
+
                 }
             }
         });
 
     }
+
 }

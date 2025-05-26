@@ -27,7 +27,6 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private final String[] releaseType;
     private List<String> originalValues;
     private List<Integer> originalImageIds;
-
     private List<String> originalArtists;
     private List<String> filteredValues;
     private List<Integer> filteredImageIds;
