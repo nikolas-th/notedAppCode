@@ -88,6 +88,11 @@ public class ReviewScreen extends AppCompatActivity {
                     homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
                     startActivity(homeIntent);
                 }
+                else if (id == R.id.nav_history) {
+                    Intent historyIntent = new Intent(ReviewScreen.this, HistoryActivity.class);
+                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(historyIntent);}
+
                 return true;
             }
         });

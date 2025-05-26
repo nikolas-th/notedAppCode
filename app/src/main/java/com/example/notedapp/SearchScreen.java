@@ -154,6 +154,12 @@ public class SearchScreen extends AppCompatActivity {
                 } else if (id == R.id.nav_logout) {
                     finish(); // eksodos
                 }
+
+                else if (id == R.id.nav_history) {
+                    Intent historyIntent = new Intent(SearchScreen.this, HistoryActivity.class);
+                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(historyIntent);}
+
                 return true;
             }
         });
