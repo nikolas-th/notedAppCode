@@ -3,6 +3,7 @@ package com.example.notedapp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DBmanager {
@@ -116,6 +117,15 @@ public class DBmanager {
             }
         }
         return null; // Not found
+    }
+
+    public static int getUserIdByUsername(String username){
+        for (User user : users) {
+            if (Objects.equals(user.getUsername(), username)) {
+                return user.getId();
+            }
+        }
+        return -1;
     }
 
 
