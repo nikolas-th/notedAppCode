@@ -113,7 +113,6 @@ public class ReviewScreen extends AppCompatActivity {
             public void onClick(View v) {
 
                 String text = userInput.getText().toString().trim();
-                int revCounter =  DBmanager.getUserById(UserSession.getUserId()).getReviewCounter() ;
 
 
                 if (text.length() > 100) { // periorismos stis 100 lekseis
@@ -126,14 +125,15 @@ public class ReviewScreen extends AppCompatActivity {
                             : String.format("%.1f/5", ratingValue);
 
                     String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+                    int revCounter =  DBmanager.getUserById(UserSession.getUserId()).getReviewCounter() ;
 
                     // Δημιουργία νέου Review και προσθήκη
                     Review newReview = new Review( UserSession.getUserId(), text, formattedRating, today, releaseId);
                     DBmanager.addReview(newReview);  // prosthkh ston pinaka me ta reviews
-                    DBmanager.getUserById(UserSession.getUserId()).setReviewCounter(revCounter) ; //prosthkh ananeomenou review counter ston xrhsth
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
                     revCounter ++;
-                    if(revCounter >= 5){ // an o xrhsths exei perissoteres apo 5 kritikes
+                    DBmanager.getUserById(UserSession.getUserId()).setReviewCounter(revCounter) ; //prosthkh ananeomenou review counter ston xrhsth
+                    if(revCounter >= 10){ // an o xrhsths exei perissoteres apo 5 kritikes
                         //kalese edw thn synarthsh
                         playConfettiThenShowDialog();
                     }
