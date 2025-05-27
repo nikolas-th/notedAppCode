@@ -102,6 +102,7 @@
             android:visibility="gone"
             app:lottie_autoPlay="false"
             app:lottie_loop="false"
+            android:elevation="10dp"
             app:lottie_fileName="confetti.json"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
