@@ -147,6 +147,13 @@ public class DBmanager {
 
     }
 
+    public static void addReleaseList(ReleaseList newReleaseList) {
+        ReleaseList[] newArray = new ReleaseList[userLists.length + 1]; //neos pinakas me ena epipleon stoixeio
+        System.arraycopy(userLists, 0, newArray, 0, userLists.length); // Antigrafh tou pinaka user ston newArray
+        newArray[userLists.length] = newReleaseList;
+        userLists = newArray;
+
+    }
     public static void addUser(User newUser){
         User[] newArray = new User[users.length + 1]; //neos pinakas me ena epipleon stoixeio
         System.arraycopy(users, 0, newArray, 0, users.length); // Antigrafh tou pinaka reviews ston newArray

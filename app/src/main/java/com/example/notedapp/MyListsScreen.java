@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public class MyListsScreen extends AppCompatActivity {
     private List<ReleaseList> usersLists;
     private ReleaseListAdapter releaseListAdapter;
     private ActivityResultLauncher<Intent> editListLauncher;
+    private FloatingActionButton newListButton;
+    private ActivityResultLauncher<Intent> newListlauncher;
 
 
 
@@ -42,7 +45,6 @@ public class MyListsScreen extends AppCompatActivity {
         menuButton = findViewById(R.id.menuButton);
 
         //Get user's lists.
-        //TODO: get user's name from UserSession class.
         usersLists = DBmanager.getListsByUser(DBmanager.getUserById(UserSession.getUserId()).getUsername());
 
         // Initialize the launcher
@@ -53,7 +55,21 @@ public class MyListsScreen extends AppCompatActivity {
                         // Refresh your data and update the adapter
                         // Simple toast with default duration (SHORT)
                         Toast.makeText(this, "Η λίστα αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
-                        usersLists = DBmanager.getListsByUser("johndoe");
+                        usersLists = DBmanager.getListsByUser(DBmanager.getUserById(UserSession.getUserId()).getUsername());
+                        releaseListAdapter.notifyDataSetChanged();
+                    }
+                });
+
+        // Initialize the new list launcher
+        newListlauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK) {
+                        // Refresh your data and update the adapter
+                        // Simple toast with default duration (SHORT)
+                        Toast.makeText(this, "Η λίστα δημιουργήθηκε!", Toast.LENGTH_SHORT).show();
+                        usersLists = DBmanager.getListsByUser(DBmanager.getUserById(UserSession.getUserId()).getUsername());
+                        releaseListAdapter.updateData(usersLists);
                         releaseListAdapter.notifyDataSetChanged();
                     }
                 });
@@ -74,6 +90,17 @@ public class MyListsScreen extends AppCompatActivity {
             releaseListAdapter = new ReleaseListAdapter(this, usersLists, editListLauncher);
             listRecyclerView.setAdapter(releaseListAdapter);
         }
+
+        //On click behavior for the new list button.
+        newListButton = findViewById(R.id.fab_new_list);
+        newListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Redirect to new list activity.
+                Intent myListsIntent = new Intent(MyListsScreen.this, CreateListScreen.class);
+                newListlauncher.launch(myListsIntent);
+            }
+        });
 
         // Otan o xrhsths pathsei to bar menu anoigei to side menu
         menuButton.setOnClickListener(v -> {

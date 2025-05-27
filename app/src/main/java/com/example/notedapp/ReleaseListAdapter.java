@@ -17,7 +17,7 @@ import java.util.List;
 public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.ReleaseListViewHolder> {
 
     private final Context context;
-    private final List<ReleaseList> releaseLists;
+    private  List<ReleaseList> releaseLists;
     private final ActivityResultLauncher<Intent> launcher;
 
     public ReleaseListAdapter(Context context, List<ReleaseList> releaseLists, ActivityResultLauncher<Intent> launcher) {
@@ -52,6 +52,12 @@ public class ReleaseListAdapter extends RecyclerView.Adapter<ReleaseListAdapter.
     public int getItemCount() {
         return releaseLists.size();
     }
+
+    public void updateData(List<ReleaseList> newList) {
+        this.releaseLists = newList;
+        notifyDataSetChanged();
+    }
+
 
     public static class ReleaseListViewHolder extends RecyclerView.ViewHolder {
         TextView titleTextView;

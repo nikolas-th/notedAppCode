@@ -65,9 +65,11 @@
                 app:layout_constraintTop_toBottomOf="@+id/list_title_input" />
 
             <ScrollView
+                android:id="@+id/scrollView2"
                 android:layout_width="409dp"
                 android:layout_height="559dp"
                 android:layout_marginStart="1dp"
+                android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/list_description_input">
 
@@ -76,6 +78,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </ScrollView>
+
+            <TextView
+                android:id="@+id/add_item_warning_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Πρόσθεσε μερικές κυκλοφορίες!"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@+id/scrollView2"
+                app:layout_constraintTop_toTopOf="@+id/scrollView2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
