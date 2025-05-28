@@ -3,6 +3,7 @@ package com.example.notedapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -94,6 +95,12 @@ public class HomeScreen extends AppCompatActivity {
             drawerLayout.openDrawer(navigationView);
         });
 
+        Button viewEventButton = findViewById(R.id.viewEventsButton);
+        viewEventButton.setOnClickListener(v -> {
+            Intent eventListIntent = new Intent(HomeScreen.this, EventList.class);
+            startActivity(eventListIntent);
+        });
+
 
     // Otan o xrhsths epileksei kati apo to side menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -114,6 +121,10 @@ public class HomeScreen extends AppCompatActivity {
                     Intent myListsIntent = new Intent(HomeScreen.this, MyListsScreen.class);
                     myListsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
                     startActivity(myListsIntent);
+                } else if (id == R.id.nav_create_event) {
+                    Intent historyIntent = new Intent(HomeScreen.this, CreateEvent.class);
+                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(historyIntent);
 
                 } else if (id == R.id.nav_history) {
                     Intent historyIntent = new Intent(HomeScreen.this, HistoryActivity.class);
