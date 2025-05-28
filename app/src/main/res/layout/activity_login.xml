@@ -49,18 +49,40 @@
             android:nextFocusDown="@+id/editPassword"/>
 
         <!-- Password -->
-        <EditText
-            android:id="@+id/editPassword"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Κωδικός"
-            android:layout_marginTop="16dp"
-            android:inputType="textPassword"
-            android:textColorHint="#666666"
-            android:padding="12dp"
-            android:background="@drawable/edittext_background"
-            android:textColor="#000000"
-            android:imeOptions="actionDone"/>
+            android:layout_marginTop="16dp">
+
+            <!-- EditText για τον κωδικό -->
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Κωδικός"
+                android:inputType="textPassword"
+                android:textColorHint="#666666"
+                android:paddingEnd="48dp"
+                android:padding="12dp"
+                android:background="@drawable/edittext_background"
+                android:textColor="#000000"
+                android:imeOptions="actionDone"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true" />
+
+            <!-- Εικονίδιο εμφάνισης/απόκρυψης κωδικού -->
+            <ImageView
+                android:id="@+id/eyeIcon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignEnd="@id/editPassword"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/hide"
+                android:clickable="true"
+                android:focusable="true" />
+        </RelativeLayout>
+
 
         <!-- Remember me -->
         <CheckBox
