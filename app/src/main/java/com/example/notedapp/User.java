@@ -21,7 +21,7 @@ public class User {
     public int getId() {
         return id;
     }
-    //sxolio gia na ginei to change kai to commit
+
     public void setId(int id) {
         this.id = id;
     }

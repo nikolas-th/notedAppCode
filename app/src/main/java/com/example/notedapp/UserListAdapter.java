@@ -14,7 +14,7 @@ public class UserListAdapter extends ArrayAdapter<User> {
 
     private final Context context;
     private final List<User> users;
-    //sxolio gia na ginei to change kai to commit
+
     public UserListAdapter(Context context, List<User> users) {
         super(context, 0, users);
         this.context = context;
