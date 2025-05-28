@@ -1,58 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileScreen">
+    tools:context=".ReviewScreen">
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/chip3"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ProfileScreen">
+
+    <Button
+        android:id="@+id/historyBtn"
         android:layout_width="303dp"
         android:layout_height="58dp"
         android:textSize="20dp"
+        android:text="Ιστορικό"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2"
-        app:layout_constraintVertical_bias="0.63"
-        tools:text="Security" />
+        app:layout_constraintTop_toBottomOf="@+id/rankText"
+        app:layout_constraintVertical_bias="0.63" />
 
-    <com.google.android.material.chip.Chip
+    <Button
         android:id="@+id/chip4"
         android:layout_width="303dp"
         android:layout_height="58dp"
         android:textSize="20dp"
+        android:textColor="@color/white"
+        android:text="Βοήθεια"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2"
-        app:layout_constraintVertical_bias="0.892"
-        tools:text="Help" />
+        app:layout_constraintTop_toBottomOf="@+id/rankText"
+        app:layout_constraintVertical_bias="0.892" />
 
-    <com.google.android.material.chip.Chip
+    <Button
         android:id="@+id/chip2"
         android:layout_width="303dp"
         android:layout_height="58dp"
         android:textSize="20dp"
+        android:textColor="@color/white"
+        android:text="Ρυθμίσεις"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2"
-        app:layout_constraintVertical_bias="0.369"
-        tools:text="Notifications" />
+        app:layout_constraintTop_toBottomOf="@+id/rankText"
+        app:layout_constraintVertical_bias="0.369" />
 
-    <com.google.android.material.chip.Chip
+    <Button
         android:id="@+id/chip"
         android:layout_width="303dp"
         android:layout_height="58dp"
         android:textSize="20dp"
+        android:textColor="@color/white"
+        android:text="Λογαριασμός"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress2"
-        app:layout_constraintVertical_bias="0.107"
-        tools:text="Account" />
+        app:layout_constraintTop_toBottomOf="@+id/rankText"
+        app:layout_constraintVertical_bias="0.107" />
 
     <LinearLayout
         android:layout_width="421dp"
@@ -85,7 +95,8 @@
         android:id="@+id/usernameText"
         android:layout_width="153dp"
         android:layout_height="48dp"
-        android:text="     User"
+        android:text="usenamer"
+        android:textAlignment="center"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -104,26 +115,27 @@
         app:layout_constraintVertical_bias="0.118"
         tools:srcCompat="@tools:sample/avatars" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="267dp"
-        android:layout_height="70dp"
-        android:backgroundTint="#EB4141"
-        android:text="Log Out"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.947" />
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="364dp"
+            android:layout_height="62dp"
+            android:backgroundTint="#EB4141"
+            android:text="Αποσύνδεση"
+            android:textSize="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.947" />
 
     <TextView
-        android:id="@+id/editTextTextEmailAddress2"
+        android:id="@+id/rankText"
         android:layout_width="188dp"
         android:layout_height="52dp"
         android:ems="10"
         android:inputType="textEmailAddress"
-        android:text="user@example.com"
+        android:text="rank"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
         android:textSize="20dp"
@@ -133,5 +145,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameText"
         app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#262626"
+        app:menu="@menu/drawer_menu" />
+</androidx.drawerlayout.widget.DrawerLayout>
+
+

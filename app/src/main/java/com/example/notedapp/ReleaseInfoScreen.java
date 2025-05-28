@@ -181,7 +181,9 @@ public class ReleaseInfoScreen extends AppCompatActivity {
 
                 int id = item.getItemId();
                 if (id == R.id.nav_home) {
-
+                    Intent homeIntent = new Intent(ReleaseInfoScreen.this, HomeScreen.class);
+                    homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(homeIntent);
                 } else if (id == R.id.nav_profil) {
                     // Τha phgainei sto profil
                 } else if (id == R.id.nav_lists) {
