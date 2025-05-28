@@ -17,7 +17,7 @@ public class UserAdapter extends ArrayAdapter<User> {
     private List<User> originalUsers;
     private List<User> filteredUsers;
     private int currentUserId;
-    //sxolio gia na ginei to change kai to commit
+
 
     public UserAdapter(Context context, List<User> users, int currentUserId) {
         super(context, 0, users);
