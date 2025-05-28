@@ -94,6 +94,15 @@
                     android:id="@+id/new_release_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/viewEventsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:backgroundTint="@color/noted_yellow"
+                    android:text="Επερχόμενα Event"
+                    android:textColor="@color/text_main" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

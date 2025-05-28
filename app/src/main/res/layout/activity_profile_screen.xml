@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ProfileScreen">
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip3"
@@ -81,7 +82,7 @@
 
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/usernameText"
         android:layout_width="153dp"
         android:layout_height="48dp"
         android:text="     User"
@@ -123,13 +124,14 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:text="user@example.com"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintTop_toBottomOf="@+id/usernameText"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
