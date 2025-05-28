@@ -3,8 +3,6 @@ package com.example.notedapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
@@ -96,12 +94,6 @@ public class HomeScreen extends AppCompatActivity {
             drawerLayout.openDrawer(navigationView);
         });
 
-        Button viewEventButton = findViewById(R.id.viewEventsButton);
-        viewEventButton.setOnClickListener(v -> {
-            Intent eventListIntent = new Intent(HomeScreen.this, EventList.class);
-            startActivity(eventListIntent);
-        });
-
 
     // Otan o xrhsths epileksei kati apo to side menu
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -112,11 +104,11 @@ public class HomeScreen extends AppCompatActivity {
                 int id = item.getItemId();
                 if (id == R.id.nav_home) {
 
-//                } else if (id == R.id.nav_profil) {
-//                    // Tha phgainei sto profil
-//                    Intent myProfileIntent = new Intent(HomeScreen.this, profile_screen.class);
-//                    myProfileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
-//                    startActivity(myProfileIntent);
+                } else if (id == R.id.nav_profil) {
+                    // Tha phgainei sto profil
+                    Intent myProfileIntent = new Intent(HomeScreen.this, ProfileScreen.class);
+                    myProfileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
+                    startActivity(myProfileIntent);
 
                 } else if (id == R.id.nav_lists) {
                     Intent myListsIntent = new Intent(HomeScreen.this, MyListsScreen.class);
@@ -125,10 +117,6 @@ public class HomeScreen extends AppCompatActivity {
 
                 } else if (id == R.id.nav_history) {
                     Intent historyIntent = new Intent(HomeScreen.this, HistoryActivity.class);
-                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(historyIntent);
-                } else if (id == R.id.nav_create_event) {
-                    Intent historyIntent = new Intent(HomeScreen.this, CreateEvent.class);
                     historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(historyIntent);
 

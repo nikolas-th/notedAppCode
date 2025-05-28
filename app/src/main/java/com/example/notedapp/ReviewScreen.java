@@ -164,28 +164,13 @@ public class ReviewScreen extends AppCompatActivity {
                 .setMessage("Υποβάλατε 100 κριτικές και κερδίσατε τον τίτλο " + rankName + "!")
                 .setPositiveButton("OK", (dialog, which) -> {
                     dialog.dismiss();
-                    showRankVisibilityDialog(context);
+                    DBmanager.getUserById(UserSession.getUserId()).setRank(rankName);
+                    endReviewActivity(context);
 
                 })
                 .show();
     }
 
-    private void showRankVisibilityDialog(Context context) {
-        new AlertDialog.Builder(context)
-                .setTitle("Επιλογή")
-                .setMessage("Θέλετε να καταστήσετε το rank σας εμφανές στο προφίλ σας;")
-                .setPositiveButton("Ναι", (dialog, which) -> {
-                    dialog.dismiss();
-                    // TODO: Κάνε κάτι με την επιλογή "Ναι"
-                    endReviewActivity(context);
-                })
-                .setNegativeButton("Όχι", (dialog, which) -> {
-                    dialog.dismiss();
-                    // TODO: Κάνε κάτι με την επιλογή "Όχι"
-                    endReviewActivity(context);
-                })
-                .show();
-    }
 
     private void endReviewActivity(Context context) { //Synarthsh gia na termathsh to activity
         if (context instanceof Activity) {
