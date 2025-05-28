@@ -50,14 +50,23 @@ public class CreateEvent extends AppCompatActivity {
 
 
         saveEventButton.setOnClickListener(v -> {
-            String title = titleEditText.getText().toString().trim();
-            String artist = artistEditText.getText().toString().trim();
+            String eventTitle = titleEditText.getText().toString();
+            String eventArtist = artistEditText.getText().toString();
+            String eventGenre = genreEditText.getText().toString();
+            String eventLocation = locationEditText.getText().toString();
+            String eventArea = areaEditText.getText().toString();
+            String eventDate = dateEditText.getText().toString();
+            String eventTime = timeEditText.getText().toString();
+            Event newEvent = new Event(eventTitle, eventArtist, eventGenre, eventArea, eventLocation, eventDate, eventTime);
 
-            if (title.isEmpty() || artist.isEmpty()) {
+
+            if (eventTitle.isEmpty() || eventArtist.isEmpty()) {
                 Toast.makeText(this, "Συμπληρώστε τουλάχιστον Τίτλο και Καλλιτέχνη", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Η εκδήλωση αποθηκεύτηκε επιτυχώς!", Toast.LENGTH_SHORT).show();
                 // Εδώ μπορείς να αποθηκεύσεις τα δεδομένα
+                DBmanager.addEvent(newEvent);
+
 
             }
         });

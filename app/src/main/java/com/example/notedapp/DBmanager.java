@@ -87,6 +87,12 @@ public class DBmanager {
             )
     };
 
+    public static Event[] events = {
+            new Event("Jazz Night", "Μαρία Παπαδοπούλου", "Jazz", "Αθήνα", "Πλ. Συντάγματος", "2025-06-15", "21:00"),
+            new Event("Rock Fest", "The Rockers", "Rock", "Θεσσαλονίκη", "Πλ. Αριστοτέλους", "2025-07-01", "20:00")
+    };
+
+
     static {
         // Συνδέουμε τις κριτικές με τις κυκλοφορίες
         for (Release release : releases) {
@@ -168,6 +174,13 @@ public class DBmanager {
         newArray[users.length] = newUser;
         users = newArray;
 
+    }
+
+    public static void addEvent(Event newEvent){
+        Event[] newArray = new Event[events.length + 1]; //neos pinakas me ena epipleon stoixeio
+        System.arraycopy(events, 0, newArray, 0, events.length); // Antigrafh tou pinaka reviews ston newArray
+        newArray[events.length] = newEvent;
+        events = newArray;
     }
 
     public static List<User> searchUsers(String query) {
