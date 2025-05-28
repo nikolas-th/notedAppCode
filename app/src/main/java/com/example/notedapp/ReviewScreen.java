@@ -1,7 +1,10 @@
 package com.example.notedapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -11,12 +14,14 @@ import android.widget.RatingBar;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
+import com.airbnb.lottie.LottieAnimationView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +37,8 @@ public class ReviewScreen extends AppCompatActivity {
     private ImageButton menuButton;
     private DrawerLayout drawerLayout;
 
+    private LottieAnimationView confettiAnimation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +49,9 @@ public class ReviewScreen extends AppCompatActivity {
         TextView ratingText = findViewById(R.id.ratingText);
         EditText userInput = findViewById(R.id.userInputText);
         Button submitBtn = findViewById(R.id.publishBtn);
+
+        confettiAnimation = findViewById(R.id.confettiAnimation); // ✅ Σύνδεση με το layout
+
 
         //gia to side menu
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -101,9 +111,11 @@ public class ReviewScreen extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String text = userInput.getText().toString().trim();
 
-                if (text.length() > 100) {
+
+                if (text.length() > 100) { // periorismos stis 100 lekseis
                     Toast.makeText(ReviewScreen.this, "Το κείμενό σου ξεπερνά τους 100 χαρακτήρες!", Toast.LENGTH_LONG).show(); //emfanish mhnymatos
                 } else {
                     // Συνέχισε με την αποθήκευση ή δημοσίευση
@@ -113,17 +125,73 @@ public class ReviewScreen extends AppCompatActivity {
                             : String.format("%.1f/5", ratingValue);
 
                     String today = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
-
+                    int revCounter =  DBmanager.getUserById(UserSession.getUserId()).getReviewCounter() ;
 
                     // Δημιουργία νέου Review και προσθήκη
                     Review newReview = new Review( UserSession.getUserId(), text, formattedRating, today, releaseId);
-                    DBmanager.addReview(newReview);
+                    DBmanager.addReview(newReview);  // prosthkh ston pinaka me ta reviews
                     Toast.makeText(ReviewScreen.this, "Η κριτική σου αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
-                    finish(); // Θα ενεργοποιήσει το onActivityResult της ReleaseInfo
+                    revCounter ++;
+                    DBmanager.getUserById(UserSession.getUserId()).setReviewCounter(revCounter) ; //prosthkh ananeomenou review counter ston xrhsth
+                    if(revCounter >= 10){ // an o xrhsths exei perissoteres apo 5 kritikes
+                        //kalese edw thn synarthsh
+                        playConfettiThenShowDialog();
+                    }
+                    else{
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+
                 }
             }
         });
 
     }
+    private void playConfettiThenShowDialog() {
+        confettiAnimation.setVisibility(View.VISIBLE);
+        confettiAnimation.playAnimation();
+
+        new Handler().postDelayed(() -> {
+            confettiAnimation.cancelAnimation();
+            confettiAnimation.setVisibility(View.GONE);
+            showRankEarnedDialog(ReviewScreen.this, "Gold");
+        }, 1000);
+    }
+
+    private void showRankEarnedDialog(Context context, final String rankName) {
+        new AlertDialog.Builder(context)
+                .setTitle("Συγχαρητήρια!")
+                .setMessage("Υποβάλατε 100 κριτικές και κερδίσατε τον τίτλο " + rankName + "!")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                    showRankVisibilityDialog(context);
+
+                })
+                .show();
+    }
+
+    private void showRankVisibilityDialog(Context context) {
+        new AlertDialog.Builder(context)
+                .setTitle("Επιλογή")
+                .setMessage("Θέλετε να καταστήσετε το rank σας εμφανές στο προφίλ σας;")
+                .setPositiveButton("Ναι", (dialog, which) -> {
+                    dialog.dismiss();
+                    // TODO: Κάνε κάτι με την επιλογή "Ναι"
+                    endReviewActivity(context);
+                })
+                .setNegativeButton("Όχι", (dialog, which) -> {
+                    dialog.dismiss();
+                    // TODO: Κάνε κάτι με την επιλογή "Όχι"
+                    endReviewActivity(context);
+                })
+                .show();
+    }
+
+    private void endReviewActivity(Context context) { //Synarthsh gia na termathsh to activity
+        if (context instanceof Activity) {
+            ((Activity) context).setResult(RESULT_OK);
+            ((Activity) context).finish();
+        }
+    }
+
 }

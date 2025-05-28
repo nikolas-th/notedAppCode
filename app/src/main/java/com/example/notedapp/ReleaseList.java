@@ -25,6 +25,7 @@ public class ReleaseList{
         this.title = title;
         this.description = description;
         this.releasesList = releasesList;
+        this.date = date;
     }
 
     public String getAuthor() {
