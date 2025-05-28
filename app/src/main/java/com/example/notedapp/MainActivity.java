@@ -1,10 +1,7 @@
 package com.example.notedapp;
 
-
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -31,31 +28,49 @@ public class MainActivity extends AppCompatActivity {
         registerLink = findViewById(R.id.registerLink);
 
         btnLogin.setOnClickListener(v -> {
-            String username = editUsername.getText().toString();
-            String password = editPassword.getText().toString();
-            boolean remember = checkboxRemember.isChecked();
+            String username = editUsername.getText().toString().trim();
+            String password = editPassword.getText().toString().trim();
 
             if (!username.isEmpty() && !password.isEmpty()) {
-                // Αντί για Toast, ανοίγουμε το MainActivity
-                //Check an einai swsta
-                //login
-                UserSession.setUserId(DBmanager.getUserIdByUsername(username));
-                Intent intent = new Intent(MainActivity.this, HomeScreen.class);
-                startActivity(intent);
-                finish(); // Προαιρετικό: κλείνει το LoginActivity ώστε να μην πάει πίσω με το back button
+
+                User foundUser = null;
+                for (User user : DBmanager.users) {
+                    if (user.getUsername().trim().equalsIgnoreCase(username.trim())) {
+                        foundUser = user;
+                        break;
+                    }
+                }
+
+                if (foundUser == null) {
+                    Toast.makeText(MainActivity.this, "Δεν βρέθηκε χρήστης με αυτό το username", Toast.LENGTH_SHORT).show();
+                } else {
+                    if (foundUser.getPassword().equals(password)) {
+                        UserSession.setUserId(foundUser.getId());
+                        Intent intent = new Intent(MainActivity.this, HomeScreen.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Λάθος κωδικός πρόσβασης", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             } else {
-                Toast.makeText(this, "Συμπλήρωσε όλα τα πεδία!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Συμπλήρωσε όλα τα πεδία!", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        TextView registerLink = findViewById(R.id.registerLink);
-        registerLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, RegisterActivity.class));
-            }
+        registerLink.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, RegisterActivity.class));
         });
+    }
 
+    private User getUserByUsernameAndPassword(String username, String password) {
+        for (User user : DBmanager.users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

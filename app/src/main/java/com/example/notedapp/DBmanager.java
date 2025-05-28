@@ -53,11 +53,10 @@ public class DBmanager {
                     "The Smiths", "Compilation", null, "Early recordings and BBC sessions", "Alternative")
     };
 
-    //dedomena gia ta reviews
     public static Review[] reviews = {
-        new Review(1,"Φοβερός δίσκος!!!", "5/5", "20/05/2025", 1),
-         new Review(2,"Ο καλυτερος δίσκος των smiths!!!", "4.9/5", "21/05/2025", 1),
-        new Review(3,"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "4.5/5", "19/05/2025", 2),
+            new Review(1,"Φοβερός δίσκος!!!", "5/5", "20/05/2025", 1),
+            new Review(2,"Ο καλυτερος δίσκος των smiths!!!", "4.9/5", "21/05/2025", 1),
+            new Review(3,"Lorem ipsum dolor sit amet, consectetur adipiscing elit...", "4.5/5", "19/05/2025", 2)
     };
 
     public static ReleaseList[] userLists = {
@@ -65,7 +64,7 @@ public class DBmanager {
                     "nikos_kal",
                     "Best of The Smiths",
                     "A curated list of my favorite releases by The Smiths.",
-                    new ArrayList<Release>(Arrays.asList(
+                    new ArrayList<>(Arrays.asList(
                             releases[0],
                             releases[2],
                             releases[4],
@@ -88,8 +87,8 @@ public class DBmanager {
             )
     };
 
-    static { // eyresh twn reviews gia kathe kykloforia
-        // Συνδέουμε τις κριτικές με κάθε κυκλοφορία
+    static {
+        // Συνδέουμε τις κριτικές με τις κυκλοφορίες
         for (Release release : releases) {
             List<Review> matchingReviews = new ArrayList<>();
             for (Review review : reviews) {
@@ -100,6 +99,7 @@ public class DBmanager {
             release.setReviews(matchingReviews);
         }
     }
+
     public static Release getReleaseById(int id) {
         for (Release release : releases) {
             if (release.id == id) {
@@ -109,14 +109,13 @@ public class DBmanager {
         return null; // Not found
     }
 
-    //pernei id kai epistrefei username
     public static User getUserById(int id) {
         for (User user : users) {
             if (user.getId() == id) {
                 return user;
             }
         }
-        return null; // Not found
+        return null;
     }
 
     public static int getUserIdByUsername(String username){
@@ -128,13 +127,17 @@ public class DBmanager {
         return -1;
     }
 
-
-
+    public static boolean usernameExists(String username) {
+        for (User user : users) {
+            if (user.getUsername().equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static List<ReleaseList> getListsByUser(String username) {
-        //Return all ReleaseLists objects that have been authored by a given username.
-        //Uses Streams API to get them.
-        return Arrays.asList(userLists).stream()
+        return Arrays.stream(userLists)
                 .filter(list -> list.getAuthor().equalsIgnoreCase(username))
                 .collect(Collectors.toList());
     }
@@ -145,6 +148,11 @@ public class DBmanager {
         newArray[reviews.length] = newReview;
         reviews = newArray;
 
+        // Συνδέεται άμεσα με την κυκλοφορία αν υπάρχει
+        Release release = getReleaseById(newReview.getReleaseId());
+        if (release != null) {
+            release.getReviews().add(newReview);
+        }
     }
 
     public static void addReleaseList(ReleaseList newReleaseList) {
@@ -152,8 +160,8 @@ public class DBmanager {
         System.arraycopy(userLists, 0, newArray, 0, userLists.length); // Antigrafh tou pinaka user ston newArray
         newArray[userLists.length] = newReleaseList;
         userLists = newArray;
-
     }
+
     public static void addUser(User newUser){
         User[] newArray = new User[users.length + 1]; //neos pinakas me ena epipleon stoixeio
         System.arraycopy(users, 0, newArray, 0, users.length); // Antigrafh tou pinaka reviews ston newArray
@@ -164,4 +172,3 @@ public class DBmanager {
 
 
 }
-
