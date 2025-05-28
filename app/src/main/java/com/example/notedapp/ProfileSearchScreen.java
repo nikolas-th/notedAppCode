@@ -21,6 +21,7 @@ public class ProfileSearchScreen extends AppCompatActivity {
     private int currentUserId;
     private List<User> allUsers;
     private ImageButton menuButton;
+    //sxolio gia na ginei to change kai to commit
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

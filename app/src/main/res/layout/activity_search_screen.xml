@@ -81,7 +81,7 @@
         </ScrollView>
 
     </LinearLayout>
-
+    <!--c//sxolio gia na ginei to change kai to commit -->
     <!-- Το πλαϊνό μενού -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
