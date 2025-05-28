@@ -7,7 +7,7 @@ public class UserSession {
     public UserSession(int userId) {
         UserSession.userId = userId;
     }
-
+    //sxolio gia na ginei to change kai to commit
     public static int getUserId() {
         return userId;
     }

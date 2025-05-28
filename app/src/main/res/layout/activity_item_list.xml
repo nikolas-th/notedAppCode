@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginHorizontal="8dp"
+    android:elevation="4dp"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Τίτλος Εκδήλωσης" />
+
+        <TextView
+            android:id="@+id/eventArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Καλλιτέχνης" />
+
+        <TextView
+            android:id="@+id/eventLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Τοποθεσία" />
+
+        <TextView
+            android:id="@+id/eventDateTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ημερομηνία και Ώρα" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

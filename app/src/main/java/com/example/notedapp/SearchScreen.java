@@ -1,55 +1,59 @@
 package com.example.notedapp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-import java.util.List;
-
 
 public class SearchScreen extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageButton menuButton;
+    Switch changetype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen);
 
-        ListView releaseList = findViewById(R.id.releaseList); //H lista me tis prosfates anazhthseis
-        SearchView searchView = findViewById(R.id.SearchBar); //h bara anazhtishs
-        TextView resSearch = findViewById(R.id.resSearch); //label "Πρόσφατες αναζητήσεις"
-        boolean isSelectionMode = getIntent().getBooleanExtra("selectionMode", false); //Gia otan epilegoume apo allo activity
-
+        ListView releaseList = findViewById(R.id.releaseList);
+        SearchView searchView = findViewById(R.id.SearchBar);
+        TextView resSearch = findViewById(R.id.resSearch);
+        boolean isSelectionMode = getIntent().getBooleanExtra("selectionMode", false);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         menuButton = findViewById(R.id.menuButton);
+        changetype = findViewById(R.id.switch4);
 
+        // Αν ο χρήστης ήρθε από την άλλη οθόνη, κράτα τη θέση του switch
+        boolean switchState = getIntent().getBooleanExtra("switchState", false);
+        changetype.setChecked(switchState);
 
-       //pername ta dedomena apo ton pinaka releases ths bashs DBmanager
+        // Εναλλαγή οθόνης όταν αλλάζει η θέση του switch
+        changetype.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Intent intent = new Intent(SearchScreen.this, ProfileSearchScreen.class);
+                intent.putExtra("switchState", true);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        // Φόρτωση των releases και του adapter (όπως πριν)
         Release[] items = DBmanager.releases;
-
-
-        // Initialize the 6 separate arrays
         String[] titles = new String[items.length];
         int[] imageIds = new int[items.length];
         String[] ratings = new String[items.length];
@@ -59,7 +63,6 @@ public class SearchScreen extends AppCompatActivity {
         String[] description = new String[items.length];
         int[] releaseIds = new int[items.length];
 
-        // Populate them by looping through the `items` array
         for (int i = 0; i < items.length; i++) {
             titles[i] = items[i].title;
             imageIds[i] = items[i].imageId;
@@ -69,7 +72,6 @@ public class SearchScreen extends AppCompatActivity {
             releaseType[i] = items[i].releaseType;
             description[i] = items[i].description;
             releaseIds[i] = items[i].id;
-
         }
 
         CustomListAdapter adapter = new CustomListAdapter(this, titles, imageIds, ratings, artists, year, releaseType, releaseIds, resSearch);
@@ -78,93 +80,67 @@ public class SearchScreen extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                return false;
+                int currentUserId = UserSession.getUserId();
+                for (User u : DBmanager.users) {
+                    if (u.getUsername().toLowerCase().contains(query.trim().toLowerCase()) && u.getId() != currentUserId) {
+                        Intent intent = new Intent(SearchScreen.this, OtherUsersActivity.class);
+                        intent.putExtra("username", u.getUsername());
+                        startActivity(intent);
+                        return true;
+                    }
+                }
+                adapter.getFilter().filter(query);
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 adapter.getFilter().filter(newText);
-                //return true;
                 return false;
             }
         });
 
-        //Metafora dedomenwn sthn othonh Release otan o xrhsths epilegei mia kykloforia
-        releaseList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (isSelectionMode) { //Gia na douleuei me list. Epilegei kai epistrefei kati.
-                    // Return the selected release ID
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("selectedReleaseId", adapter.getReleaseId(position)); // Assuming Release has getId()
-                    setResult(RESULT_OK, resultIntent);
-                    finish();
-                } else {
-                    // Πάρε τα δεδομένα που θες
-                    Release selectedRelease = DBmanager.getReleaseById(adapter.getReleaseId(position));
-                    String selectedTitle = selectedRelease.title;
-                    int selectedImageId = selectedRelease.imageId;
-                    String selectedArtist = selectedRelease.artist;
-                    int selectedYear = selectedRelease.year;
-                    String selectedReleaseType = selectedRelease.releaseType;
-                    String selectedRatings = selectedRelease.rating;
-                    String selectedDescription = selectedRelease.description;
-
-
-                    // Φτιάξε το Intent
-                    Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
-                    intent.putExtra("title", selectedTitle);
-                    intent.putExtra("imageId", selectedImageId);
-                    intent.putExtra("artist", selectedArtist);
-                    intent.putExtra("year", selectedYear);
-                    intent.putExtra("type", selectedReleaseType);
-                    intent.putExtra("rating", selectedRatings);
-                    intent.putExtra("description", selectedDescription);
-
-                    // Ξεκίνα το άλλο activity
-                    startActivity(intent);
-                }
+        releaseList.setOnItemClickListener((parent, view, position, id) -> {
+            if (isSelectionMode) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("selectedReleaseId", adapter.getReleaseId(position));
+                setResult(RESULT_OK, resultIntent);
+                finish();
+            } else {
+                Release selectedRelease = DBmanager.getReleaseById(adapter.getReleaseId(position));
+                Intent intent = new Intent(SearchScreen.this, ReleaseInfoScreen.class);
+                intent.putExtra("title", selectedRelease.title);
+                intent.putExtra("imageId", selectedRelease.imageId);
+                intent.putExtra("artist", selectedRelease.artist);
+                intent.putExtra("year", selectedRelease.year);
+                intent.putExtra("type", selectedRelease.releaseType);
+                intent.putExtra("rating", selectedRelease.rating);
+                intent.putExtra("description", selectedRelease.description);
+                startActivity(intent);
             }
         });
 
-        // Otan o xrhsths pathsei to bar menu anoigei to side menu
-        menuButton.setOnClickListener(v -> {
-            drawerLayout.openDrawer(navigationView);
-        });
+        menuButton.setOnClickListener(v -> drawerLayout.openDrawer(navigationView));
 
-        // Otan o xrhsths epileksei kati apo to side menu
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                drawerLayout.closeDrawers(); // kleisimo tou menu
-
-                int id = item.getItemId();
-                if (id == R.id.nav_home) {
-                    Intent homeIntent = new Intent(SearchScreen.this, HomeScreen.class);
-                    homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
-                    startActivity(homeIntent);
-                } else if (id == R.id.nav_profil) {
-                    // Τha phgainei sto profil
-                } else if (id == R.id.nav_lists) {
-                        // Τha phgainei stis listes
-                    Intent myListsIntent = new Intent(SearchScreen.this, MyListsScreen.class);
-                    myListsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Optional: Clears activity stack
-                    startActivity(myListsIntent);
-
-                } else if (id == R.id.nav_logout) {
-                    finish(); // eksodos
-                }
-
-                else if (id == R.id.nav_history) {
-                    Intent historyIntent = new Intent(SearchScreen.this, HistoryActivity.class);
-                    historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(historyIntent);}
-
-                return true;
+        navigationView.setNavigationItemSelectedListener(item -> {
+            drawerLayout.closeDrawers();
+            int id = item.getItemId();
+            if (id == R.id.nav_home) {
+                Intent homeIntent = new Intent(SearchScreen.this, HomeScreen.class);
+                homeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(homeIntent);
+            } else if (id == R.id.nav_lists) {
+                Intent myListsIntent = new Intent(SearchScreen.this, MyListsScreen.class);
+                myListsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(myListsIntent);
+            } else if (id == R.id.nav_logout) {
+                finish();
+            } else if (id == R.id.nav_history) {
+                Intent historyIntent = new Intent(SearchScreen.this, HistoryActivity.class);
+                historyIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(historyIntent);
             }
+            return true;
         });
     }
-
 }
-
-

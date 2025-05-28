@@ -162,6 +162,24 @@ public class DBmanager {
 
     }
 
+    public static List<User> searchUsers(String query) {
+        List<User> result = new ArrayList<>();
+        for (User user : users) {
+            if (user.getUsername().toLowerCase().contains(query.toLowerCase())) {
+                result.add(user);
+            }
+        }
+        return result;
+
+    }
+
+    //Gia na emfanizetai apo prin
+    public static List<User> getAllUsers() {
+        return new ArrayList<>(Arrays.asList(users));
+    }
+
+
+
 
 }
 
