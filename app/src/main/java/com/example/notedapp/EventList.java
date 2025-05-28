@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class EventList extends AppCompatActivity {
@@ -43,9 +44,7 @@ public class EventList extends AppCompatActivity {
         eventRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Εικονικά δεδομένα (mock)
-        List<Event> events = new ArrayList<>();
-        events.add(new Event("Jazz Night", "Μαρία Παπαδοπούλου", "Jazz", "Αθήνα", "Πλ. Συντάγματος", "2025-06-15", "21:00"));
-        events.add(new Event("Rock Fest", "The Rockers", "Rock", "Θεσσαλονίκη", "Πλ. Αριστοτέλους", "2025-07-01", "20:00"));
+        List<Event> events = Arrays.asList(DBmanager.events);
 
         eventAdapter = new EventAdapter(events);
         eventRecyclerView.setAdapter(eventAdapter);
