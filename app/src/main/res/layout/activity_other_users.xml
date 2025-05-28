@@ -15,6 +15,7 @@
         android:layout_marginBottom="64dp"
         android:padding="12dp"
         android:text="Ακολουθήστε"
+        android:backgroundTint="@color/noted_yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
@@ -65,7 +66,7 @@
         app:srcCompat="@drawable/profilepicture" />
 
     <TextView
-        android:id="@+id/editTextText"
+        android:id="@+id/usernameText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -78,5 +79,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.422" />
+
+    <TextView
+        android:id="@+id/rankText"
+        android:layout_width="250dp"
+        android:layout_height="32dp"
+        android:text="Rank"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/followbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/usernameText"
+        app:layout_constraintVertical_bias="0.086" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

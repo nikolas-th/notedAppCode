@@ -20,6 +20,8 @@ public class OtherUsersActivity extends AppCompatActivity {
     private ImageView profilepicture;
     private TextView username;
     private ImageButton menuButton;
+    private TextView ranking;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +32,12 @@ public class OtherUsersActivity extends AppCompatActivity {
         // Αρχικοποίηση views ΜΕΤΑ το setContentView
         follow = findViewById(R.id.followbutton);
         profilepicture = findViewById(R.id.imageView4);
-        username = findViewById(R.id.editTextText);
+        username = findViewById(R.id.usernameText);
         menuButton = findViewById(R.id.menuButton);
+        ranking = findViewById(R.id.rankText);
+
+        username.setText(DBmanager.getUserById(UserSession.getUserId()).getUsername());
+        ranking.setText(DBmanager.getUserById(UserSession.getUserId()).getRank());
 
         // Εφαρμογή padding στα system bars (π.χ. status bar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
