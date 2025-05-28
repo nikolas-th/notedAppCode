@@ -98,40 +98,7 @@
                     android:layout_height="wrap_content"
                     android:hint="Ώρα Έναρξης" />
 
-                <EditText
-                    android:id="@+id/priceEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Τιμή Εισιτηρίου (€)" />
-
-                <EditText
-                    android:id="@+id/participantsEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Άλλοι Συμμετέχοντες" />
-
                 <!-- Εικόνα αφίσας -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Αφίσα Εκδήλωσης"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp" />
-
-                <ImageView
-                    android:id="@+id/posterImageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    android:scaleType="centerCrop"
-                    android:background="#CCCCCC" />
-
-                <Button
-                    android:id="@+id/selectPosterButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Επιλογή Εικόνας"
-                    android:layout_marginTop="8dp" />
 
 
                 <EditText
@@ -148,7 +115,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="Αποθήκευση Εκδήλωσης" />
+                    android:backgroundTint="@color/noted_yellow"
+                    android:text="Αποθήκευση Εκδήλωσης"
+                    android:textColor="@color/text_main" />
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

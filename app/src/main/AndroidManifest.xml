@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -21,9 +20,6 @@
             android:exported="false" />
         <activity
             android:name=".HistoryActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.theme.HistoryScreen"
             android:exported="false" />
         <activity
             android:name=".CreateListScreen"

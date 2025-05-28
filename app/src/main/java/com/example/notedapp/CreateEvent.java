@@ -40,15 +40,14 @@ public class CreateEvent extends AppCompatActivity {
         areaEditText = findViewById(R.id.areaEditText);
         dateEditText = findViewById(R.id.dateEditText);
         timeEditText = findViewById(R.id.timeEditText);
-        priceEditText = findViewById(R.id.priceEditText);
-        participantsEditText = findViewById(R.id.participantsEditText);
-        descriptionEditText = findViewById(R.id.descriptionEditText);
-        posterImageView = findViewById(R.id.posterImageView);
 
-        Button selectPosterButton = findViewById(R.id.selectPosterButton);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
+
+
+
         Button saveEventButton = findViewById(R.id.saveEventButton);
 
-        selectPosterButton.setOnClickListener(v -> openImageChooser());
+
 
         saveEventButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString().trim();
@@ -59,6 +58,7 @@ public class CreateEvent extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Η εκδήλωση αποθηκεύτηκε επιτυχώς!", Toast.LENGTH_SHORT).show();
                 // Εδώ μπορείς να αποθηκεύσεις τα δεδομένα
+
             }
         });
 
@@ -74,18 +74,4 @@ public class CreateEvent extends AppCompatActivity {
         });
     }
 
-    private void openImageChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
-        startActivityForResult(Intent.createChooser(intent, "Επιλέξτε Εικόνα"), PICK_IMAGE_REQUEST);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            selectedImageUri = data.getData();
-            posterImageView.setImageURI(selectedImageUri);
-        }
-    }
 }
