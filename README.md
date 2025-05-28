@@ -6,10 +6,8 @@
 
 Ο πηγαίος κώδικας μπορεί να βρεθεί στο [**app/src/main/java/com/example/notedapp.**](https://github.com/nikolas-th/notedAppCode/tree/master/app/src/main/java/com/example/notedapp)
 
-Για δική σας ευκολία, συμπεριλάβαμε το .apk αρχείο για την εγκατάσταση της εφαρμογής. Μπορεί να βρεθεί στα Releases.
+Για δική σας ευκολία, συμπεριλάβαμε το .apk αρχείο για την εγκατάσταση της εφαρμογής. Μπορεί να βρεθεί στα [Releases](https://github.com/nikolas-th/notedAppCode/releases/tag/v1.0.0).
 
 Για log in μπορείτε να χρησιμοποιήσετε το account με **username** "nikos_kal" με **password** "pass123" ή να δημιουργήσετε το δικό σας.
-
-  
 
 &nbsp;
